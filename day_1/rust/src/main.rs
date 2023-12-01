@@ -1,7 +1,6 @@
 use std::env;
 use std::fs::read_to_string;
-use std::io::Error;
-use std::process::exit;
+use std::io::{Error, ErrorKind};
 
 fn update_digits(first_digit: &mut u32, last_digit: &mut u32, digit: u32) {
     if *first_digit == 255 {
@@ -78,9 +77,11 @@ fn main() -> Result<(), Error> {
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        println!("Error: Input file not specified.");
-        println!("Usage: calib filename\n");
-        exit(0);
+        println!("Usage: calib filename");
+        return Err(Error::new(
+            ErrorKind::InvalidData,
+            "Error: Input file not specified.",
+        ));
     }
 
     let strings: Vec<String> = read_to_string(args.get(1).unwrap())?
