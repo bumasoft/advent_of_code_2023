@@ -18,7 +18,7 @@ static inline void set_digits(uint8_t* first_digit, uint8_t* last_digit, uint8_t
 bool starts_with(const char* str, const char* test) {
     for (; *str == *test && *test; str++, test++) ;
 
-    return !*test && *str;
+    return !*test;
 }
 
 uint8_t num_from_string(char* str) {
