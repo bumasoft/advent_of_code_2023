@@ -1,6 +1,6 @@
 use std::env;
 use std::fs::read_to_string;
-use std::io::{Error, ErrorKind};
+use std::process::ExitCode;
 
 const UNDEFINED_DIGIT: u32 = 255;
 
@@ -73,20 +73,30 @@ fn num_from_string(calibration: &String) -> u32 {
     first_digit * 10 + last_digit
 }
 
-fn main() -> Result<(), Error> {
+fn main() -> ExitCode {
     println!("**** Advent of Code, Day 1, 2023 ****\n");
 
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
-        println!("Usage: calib filename");
-        return Err(Error::new(
-            ErrorKind::InvalidData,
-            "Error: Input file not specified.",
-        ));
+        eprintln!("Error: Input file not specified.");
+        eprintln!(
+            "Usage: {} filename",
+            env::current_exe()
+                .ok()
+                .unwrap()
+                .file_name()
+                .unwrap()
+                .to_str()
+                .unwrap()
+                .to_owned()
+        );
+
+        return ExitCode::FAILURE;
     }
 
-    let strings: Vec<String> = read_to_string(args.get(1).unwrap())?
+    let strings: Vec<String> = read_to_string(args.get(1).unwrap())
+        .expect("Failed to read file.")
         .lines()
         .map(String::from)
         .collect();
@@ -101,5 +111,5 @@ fn main() -> Result<(), Error> {
 
     println!("\nSum of all the calibration values: {}", sum);
 
-    Ok(())
+    ExitCode::SUCCESS
 }
