@@ -7,11 +7,12 @@
 /* Advent Of Code 2023, Day 1: https://adventofcode.com/2023/day/1 */
 
 #define BUFFER_LENGTH 255
+#define UNDEFINED_DIGIT 255
 #define DEBUG_RESULT() printf("%s = %d\n", buffer, num)
 #define UPDATE_DIGITS(d) set_digits(&first_digit, &last_digit, d)
 
 static inline void set_digits(uint8_t* first_digit, uint8_t* last_digit, uint8_t value) {
-    if (*first_digit == 255) *first_digit = value;
+    if (*first_digit == UNDEFINED_DIGIT) *first_digit = value;
     *last_digit = value;
 }
 
@@ -22,8 +23,8 @@ bool starts_with(const char* str, const char* test) {
 }
 
 uint8_t num_from_string(char* str) {
-    uint8_t first_digit = 255;
-    uint8_t last_digit = 255;
+    uint8_t first_digit = UNDEFINED_DIGIT;
+    uint8_t last_digit = UNDEFINED_DIGIT;
 
     for(; *str; str++) {
         if (*str < '0' || *str > '9') {
@@ -65,7 +66,7 @@ uint8_t num_from_string(char* str) {
             continue;
         }
 
-        if (first_digit == 255) first_digit = *str - '0';
+        if (first_digit == UNDEFINED_DIGIT) first_digit = *str - '0';
         last_digit = *str - '0';
     }
 
