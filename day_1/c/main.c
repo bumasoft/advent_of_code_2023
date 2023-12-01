@@ -15,15 +15,10 @@ static inline void set_digits(uint8_t* first_digit, uint8_t* last_digit, uint8_t
     *last_digit = value;
 }
 
-bool starts_with(const char* str, char* test) {
-    size_t len = strlen(test);
+bool starts_with(const char* str, const char* test) {
+    for (; *str == *test && *test; str++, test++) ;
 
-    char chunk[len];
-
-    for (size_t i=0; i<len; i++) chunk[i] = str[i];
-    chunk[len] = '\0';
-
-    return strcmp(chunk, test) == 0;
+    return !*test && *str;
 }
 
 uint8_t num_from_string(char* str) {
