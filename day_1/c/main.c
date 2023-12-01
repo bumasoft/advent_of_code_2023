@@ -66,8 +66,7 @@ uint8_t num_from_string(char* str) {
             continue;
         }
 
-        if (first_digit == UNDEFINED_DIGIT) first_digit = *str - '0';
-        last_digit = *str - '0';
+        UPDATE_DIGITS(*str - '0');
     }
 
     return first_digit * 10 + last_digit;
