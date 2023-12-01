@@ -77,7 +77,7 @@ int main(int argc, char** argv)    {
 
     if (argc < 2) {
         fputs("Error: Input file not specified.\n", stderr);
-        fputs("Usage: calib filename\n", stderr);
+        fprintf(stderr, "Usage: %s filename\n", argv[0]);
         exit(0);
     }
 
