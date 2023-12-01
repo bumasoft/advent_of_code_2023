@@ -81,7 +81,8 @@ int main(int argc, char** argv)    {
     puts("**** Advent of Code, Day 1, 2023 ****\n");
 
     if (argc < 2) {
-        puts("Error: Filename not specified.\n\nUsage: calib filename\n");
+        puts("Error: Input file not specified.\n");
+        puts("Usage: calib filename\n");
         exit(0);
     }
 
@@ -102,7 +103,7 @@ int main(int argc, char** argv)    {
         sum += num;
     }
 
-    printf("\nSum of all the calibration values: %llu\n", sum);
+    printf("\nSum of all the calibration values: %llu", sum);
 
     fclose(fp);
     return 0;
