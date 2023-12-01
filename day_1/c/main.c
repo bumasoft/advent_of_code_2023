@@ -98,8 +98,7 @@ int main(int argc, char** argv)    {
         sum += num;
     }
 
-    printf("\nSum of all the calibration values: %llu", sum);
+    printf("Sum of all the calibration values: %llu\n", sum);
 
     fclose(fp);
-    return 0;
 }
