@@ -3,6 +3,7 @@ use std::fs::read_to_string;
 use std::io::{Error, ErrorKind};
 
 const UNDEFINED_DIGIT: u32 = 255;
+
 fn update_digits(first_digit: &mut u32, last_digit: &mut u32, digit: u32) {
     if *first_digit == 255 {
         *first_digit = digit;
@@ -62,7 +63,11 @@ fn num_from_string(calibration: &String) -> u32 {
             continue;
         }
 
-        update_digits(&mut first_digit, &mut last_digit, chars[i].to_digit(10).unwrap());
+        update_digits(
+            &mut first_digit,
+            &mut last_digit,
+            chars[i].to_digit(10).unwrap(),
+        );
     }
 
     first_digit * 10 + last_digit
