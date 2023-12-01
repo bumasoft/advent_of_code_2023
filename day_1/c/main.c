@@ -78,14 +78,14 @@ int main(int argc, char** argv)    {
     if (argc < 2) {
         fputs("Error: Input file not specified.\n", stderr);
         fprintf(stderr, "Usage: %s filename\n", argv[0]);
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     FILE* fp = fopen(argv[1], "r");
 
     if (fp == NULL) {
         puts("Could not open file.");
-        exit(0);
+        exit(EXIT_FAILURE);
     }
 
     char buffer[BUFFER_LENGTH];
