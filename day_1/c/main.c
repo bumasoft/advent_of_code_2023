@@ -81,8 +81,8 @@ int main(int argc, char** argv)    {
     puts("**** Advent of Code, Day 1, 2023 ****\n");
 
     if (argc < 2) {
-        puts("Error: Input file not specified.\n");
-        puts("Usage: calib filename\n");
+        fputs("Error: Input file not specified.\n", stderr);
+        fputs("Usage: calib filename\n", stderr);
         exit(0);
     }
 
