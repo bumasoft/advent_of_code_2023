@@ -6,7 +6,7 @@ See [main README](https://github.com/bumasoft/advent_of_code_2023/blob/main/day_
 
 ### Buidling
 
-`gcc ancillary.c main.c -o cubes`
+`gcc ancillary.c draw.c game.c main.c -o cubes`
 
 ### Running
 
