@@ -73,17 +73,9 @@ fn process_string(calibration: &String, sol: &mut Solution) {
 
         let digit = chars[i].to_digit(10).unwrap();
 
-        update_digits(
-            &mut first_digit_p1,
-            &mut last_digit_p1,
-            digit,
-        );
+        update_digits(&mut first_digit_p1, &mut last_digit_p1, digit);
 
-        update_digits(
-            &mut first_digit_p2,
-            &mut last_digit_p2,
-            digit,
-        );
+        update_digits(&mut first_digit_p2, &mut last_digit_p2, digit);
     }
 
     sol.part_one += (first_digit_p1 * 10 + last_digit_p1) as u64;
@@ -119,7 +111,7 @@ fn main() -> ExitCode {
         .collect();
 
     let mut sol = Solution {
-      part_one: 0,
+        part_one: 0,
         part_two: 0,
     };
 
