@@ -183,14 +183,11 @@ int main(int argc, char **argv) {
 
     FILE *fp = open_file_from_args(argc, argv);
 
-    char buffer[BUFFER_LENGTH];
+    char game[BUFFER_LENGTH];
 
     solution_t solution = {0, 0};
 
-    while (fgets(buffer, BUFFER_LENGTH, fp)) {
-        // printf("%d\t", return_id_if_possible(buffer));
-        solve_game(buffer, &solution);
-    }
+    while (fgets(game, BUFFER_LENGTH, fp)) solve_game(game, &solution);
 
     printf("Part 1. Sum of Ids: %llu\n", solution.part_one_sum);
     printf("Part 2. Sum of Powers of Minimum Set of Cubes: %llu\n", solution.part_two_sum);
