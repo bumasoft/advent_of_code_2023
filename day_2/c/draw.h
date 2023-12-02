@@ -5,7 +5,7 @@
 #ifndef C_DRAW_H
 #define C_DRAW_H
 #pragma once
-#include "cubes.h"
+#include "color_cubes.h"
 typedef struct {
     uint8_t number;
     Color color;

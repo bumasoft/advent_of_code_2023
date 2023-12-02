@@ -3,7 +3,7 @@
 //
 #include <string.h>
 #include "ancillary.h"
-#include "cubes.h"
+#include "color_cubes.h"
 #include "draw.h"
 
 /*
