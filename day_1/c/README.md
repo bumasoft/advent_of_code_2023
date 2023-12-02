@@ -2,7 +2,7 @@
 
 ## Problem: Day 1: Trebuchet?!
 
-See README file one folder up (in _**day_1**_ folder).
+See [main README](https://github.com/bumasoft/advent_of_code_2023/blob/main/day_1/README.md) file for Day 1.
 
 ### Buidling
 
