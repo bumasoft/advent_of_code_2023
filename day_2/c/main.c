@@ -171,7 +171,7 @@ static void solve_game(char game[], solution_t *solution) {
         for (Color i = RED; i < NUM_COLORS; i++)
             if (draw_report.numbers[i] > max_colors[i]) max_colors[i] = draw_report.numbers[i];
 
-        free(draw);
+        free((void*)draw);
     }
 
     if (possible) solution->part_one_sum += game_id;
