@@ -25,6 +25,12 @@ inline static void throw_allocation_error() {
     exit(EXIT_FAILURE);
 }
 
+// Typical structure for an Advent of Code puzzle solution
+typedef struct {
+    uint64_t part_one_sum;
+    uint64_t part_two_sum;
+} solution_t;
+
 // File IO
 FILE* open_file_from_args(int argc, char** argv);
 
