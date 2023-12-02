@@ -18,9 +18,6 @@
 #define TO_DIGIT(expr) ((expr) - '0')
 #define NOT_CRLF(expr) ((expr) != '\n' && (expr) != '\r')
 
-#define FREE_MATRIX(varname, rows) for (size_t i=0; i<rows; i++) free(varname[i]); free(varname);
-#define SAFE_CALLOC(into, count, elemsize) into = calloc(count, elemsize); \
-                                           if (into == NULL) throw_allocation_error();
 #define SAFE_MALLOC(type, var, count, elemsize) type var = malloc(count * elemsize); \
                                                 if (var == NULL) throw_allocation_error();
 
