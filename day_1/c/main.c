@@ -9,12 +9,18 @@
 #define BUFFER_LENGTH 255
 #define UNDEFINED_DIGIT 255
 #define DEBUG_RESULT() printf("%s = %d\n", buffer, num)
-#define UPDATE_DIGITS(d) set_digits(&first_digit, &last_digit, d)
+#define UPDATE_DIGITS_P1(d) set_digits(&first_digit_p1, &last_digit_p1, d)
+#define UPDATE_DIGITS_P2(d) set_digits(&first_digit_p2, &last_digit_p2, d)
 
 static inline void set_digits(uint8_t* first_digit, uint8_t* last_digit, uint8_t value) {
     if (*first_digit == UNDEFINED_DIGIT) *first_digit = value;
     *last_digit = value;
 }
+
+typedef struct {
+    uint64_t part_one;
+    uint64_t part_two;
+} solution_t;
 
 bool starts_with(const char* str, const char* test) {
     for (; *str == *test && *test; str++, test++) ;
@@ -22,9 +28,12 @@ bool starts_with(const char* str, const char* test) {
     return !*test;
 }
 
-uint8_t num_from_string(char* str) {
-    uint8_t first_digit = UNDEFINED_DIGIT;
-    uint8_t last_digit = UNDEFINED_DIGIT;
+void process_string(char* str, solution_t* solution) {
+    uint8_t first_digit_p1 = UNDEFINED_DIGIT;
+    uint8_t last_digit_p1 = UNDEFINED_DIGIT;
+
+    uint8_t first_digit_p2 = UNDEFINED_DIGIT;
+    uint8_t last_digit_p2 = UNDEFINED_DIGIT;
 
     for(; *str; str++) {
         if (*str < '0' || *str > '9') {
@@ -32,33 +41,33 @@ uint8_t num_from_string(char* str) {
             switch (*str) {
                 case 'o':
                     if (starts_with(str, "one"))
-                        UPDATE_DIGITS(1);
+                        UPDATE_DIGITS_P2(1);
                     break;
                 case 't':
                     if (starts_with(str, "two"))
-                        UPDATE_DIGITS(2);
+                        UPDATE_DIGITS_P2(2);
                     else if (starts_with(str, "three"))
-                        UPDATE_DIGITS(3);
+                        UPDATE_DIGITS_P2(3);
                     break;
                 case 'f':
                     if (starts_with(str, "four"))
-                        UPDATE_DIGITS(4);
+                        UPDATE_DIGITS_P2(4);
                     else if (starts_with(str, "five"))
-                        UPDATE_DIGITS(5);
+                        UPDATE_DIGITS_P2(5);
                     break;
                 case 's':
                     if (starts_with(str, "six"))
-                        UPDATE_DIGITS(6);
+                        UPDATE_DIGITS_P2(6);
                     else if (starts_with(str, "seven"))
-                        UPDATE_DIGITS(7);
+                        UPDATE_DIGITS_P2(7);
                     break;
                 case 'e':
                     if (starts_with(str, "eight"))
-                        UPDATE_DIGITS(8);
+                        UPDATE_DIGITS_P2(8);
                     break;
                 case 'n':
                     if (starts_with(str, "nine"))
-                        UPDATE_DIGITS(9);
+                        UPDATE_DIGITS_P2(9);
                     break;
                 default: ;
             }
@@ -66,10 +75,12 @@ uint8_t num_from_string(char* str) {
             continue;
         }
 
-        UPDATE_DIGITS(*str - '0');
+        UPDATE_DIGITS_P1(*str - '0');
+        UPDATE_DIGITS_P2(*str - '0');
     }
 
-    return first_digit * 10 + last_digit;
+    solution->part_one += (first_digit_p1 * 10 + last_digit_p1);
+    solution->part_two += (first_digit_p2 * 10 + last_digit_p2);
 }
 
 int main(int argc, char** argv)    {
@@ -90,15 +101,12 @@ int main(int argc, char** argv)    {
 
     char buffer[BUFFER_LENGTH];
 
-    uint64_t sum = 0;
+    solution_t solution = {0, 0};
 
-    while (fgets(buffer, BUFFER_LENGTH, fp)) {
-        uint8_t num = num_from_string(buffer);
-        // DEBUG_RESULT();
-        sum += num;
-    }
+    while (fgets(buffer, BUFFER_LENGTH, fp)) process_string(buffer, &solution);
 
-    printf("Sum of all the calibration values: %llu\n", sum);
+    printf("Part 1 answer: %llu\n", solution.part_one);
+    printf("Part 2 answer: %llu\n", solution.part_two);
 
     fclose(fp);
 }
