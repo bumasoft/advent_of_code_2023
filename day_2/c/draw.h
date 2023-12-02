@@ -4,6 +4,7 @@
 
 #ifndef C_DRAW_H
 #define C_DRAW_H
+
 #include "color_cubes.h"
 
 typedef struct {
