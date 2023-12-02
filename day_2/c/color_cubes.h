@@ -4,6 +4,7 @@
 
 #ifndef C_CUBES_H
 #define C_CUBES_H
+
 #define RED_TEXT "red"
 #define GREEN_TEXT "green"
 #define BLUE_TEXT "blue"
@@ -19,4 +20,5 @@ typedef enum {
 } Color;
 
 static const uint8_t MAX_CUBES[NUM_COLORS] = {MAX_RED_CUBES, MAX_GREEN_CUBES, MAX_BLUE_CUBES};
+
 #endif //C_CUBES_H

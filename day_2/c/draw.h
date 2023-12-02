@@ -4,8 +4,8 @@
 
 #ifndef C_DRAW_H
 #define C_DRAW_H
-#pragma once
 #include "color_cubes.h"
+
 typedef struct {
     uint8_t number;
     Color color;
@@ -19,4 +19,5 @@ typedef struct {
 const char *get_draw_and_skip_ahead(char **draws);
 color_draw_t process_color_draw(char color_draw[], size_t color_draw_len);
 void analyze_draw(const char *draw, draw_analysis_t *report);
+
 #endif //C_DRAW_H

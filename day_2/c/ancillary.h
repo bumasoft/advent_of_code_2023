@@ -4,7 +4,6 @@
 
 #ifndef C_ANCILLARY_H
 #define C_ANCILLARY_H
-#pragma once
 
 #include <stdint.h>
 #include <stdbool.h>
