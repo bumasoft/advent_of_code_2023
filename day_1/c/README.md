@@ -6,7 +6,7 @@ See README file one folder up (in _**day_1**_ folder).
 
 ### Buidling
 
-`gcc main.c -o calib`
+`gcc ancillary.c main.c -o calib`
 
 ### Running
 
