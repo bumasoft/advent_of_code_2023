@@ -84,11 +84,9 @@ void analyze_draw(const char *draw, draw_analysis_t *report) {
 
         color_draw_t data = process_color_draw(color_draw, color_draw_len);
 
-        for (Color i = RED; i < NUM_COLORS; i++)
-            if (data.color == i && data.number > MAX_CUBES[i]) {
-                report->possible = false;
-                break;
-            }
+        if (data.number > MAX_CUBES[data.color]) {
+            report->possible = false;
+        }
 
         report->numbers[data.color] = data.number;
 
