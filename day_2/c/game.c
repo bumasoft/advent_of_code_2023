@@ -50,7 +50,7 @@ void solve_game(char game[], solution_t *solution) {
 
         analyze_draw(draw, &draw_report);
 
-        if (!draw_report.possible) possible = false;
+        possible &= draw_report.possible;
 
         for (Color i = RED; i < NUM_COLORS; i++)
             if (draw_report.numbers[i] > max_colors[i]) max_colors[i] = draw_report.numbers[i];
