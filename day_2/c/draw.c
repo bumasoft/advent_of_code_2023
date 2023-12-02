@@ -20,7 +20,7 @@ const char *get_draw_and_skip_ahead(char **draws) {
     for (i = 0; **draws && **draws != ';'; (*draws)++, i++) {
         if (IS_CRLF(**draws)) continue;
         if (i == SMALL_BUFFER_LENGTH) {
-            PANIC("Faulty data!");
+            PANIC("Buffer overflow. Seems the data is corrupted.");
         }
         draw[i] = **draws;
     }
@@ -46,7 +46,7 @@ color_draw_t process_color_draw(char color_draw[], size_t color_draw_len) {
     else if (token_blue != NULL) data.color = BLUE;
     else if (token_green) data.color = GREEN;
     else {
-        PANIC("Faulty data!");
+        PANIC("Faulty data! Invalid color detected.");
     }
 
     uint8_t num = 0;
