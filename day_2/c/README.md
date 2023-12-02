@@ -2,7 +2,7 @@
 
 ## Problem: Day 2: Cube Conundrum
 
-See README file one folder up (in _**day_2**_ folder).
+See [main README](https://github.com/bumasoft/advent_of_code_2023/edit/main/day_2/README.md) file for Day 2.
 
 ### Buidling
 
