@@ -2,8 +2,8 @@
  * Advent Of Code 2023, Day 2: https://adventofcode.com/2023/day/2
 */
 
-#include "ancillary.h"
 #include <string.h>
+#include "ancillary.h"
 
 #define RED_TEXT "red"
 #define GREEN_TEXT "green"
