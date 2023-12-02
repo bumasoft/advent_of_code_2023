@@ -73,8 +73,7 @@ void analyze_draw(const char *draw, draw_analysis_t *report) {
         size_t color_draw_len = 0;
         while (*draw && *draw != ',' && *draw != ';') {
             if (color_draw_len == SMALL_BUFFER_LENGTH) {
-                puts("Buffer overflow. Seems the data is corrupted.");
-                exit(EXIT_FAILURE);
+                PANIC("Buffer overflow. Seems the data is corrupted.");
             }
             color_draw[color_draw_len++] = *draw;
             draw++;
