@@ -13,12 +13,18 @@ const char *get_draw_and_skip_ahead(char **draws) {
     // skip whitespace
     while (**draws && !IS_DIGIT(**draws)) (*draws)++;
 
-    SAFE_MALLOC(char*, draw, 64, sizeof(char));
+    SAFE_MALLOC(char*, draw, SMALL_BUFFER_LENGTH, sizeof(char));
 
     // copy draw and skip ahead in the draws buffer
     size_t i;
-    for (i = 0; **draws && **draws != ';'; (*draws)++, i++)
-        if NOT_CRLF(**draws) draw[i] = **draws;
+    for (i = 0; **draws && **draws != ';'; (*draws)++, i++) {
+        if (IS_CRLF(**draws)) continue;
+        if (i == SMALL_BUFFER_LENGTH) {
+            PANIC("Faulty data!");
+        }
+        draw[i] = **draws;
+    }
+
     draw[i] = '\0';
 
     if (**draws == ';') *draws++;
@@ -40,8 +46,7 @@ color_draw_t process_color_draw(char color_draw[], size_t color_draw_len) {
     else if (token_blue != NULL) data.color = BLUE;
     else if (token_green) data.color = GREEN;
     else {
-        fprintf(stderr, "Faulty data: %s", color_draw);
-        exit(EXIT_FAILURE);
+        PANIC("Faulty data!");
     }
 
     uint8_t num = 0;

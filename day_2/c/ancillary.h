@@ -15,7 +15,10 @@
 
 #define IS_DIGIT(expr) ((expr) >= '0' && (expr) <= '9')
 #define TO_DIGIT(expr) ((expr) - '0')
-#define NOT_CRLF(expr) ((expr) != '\n' && (expr) != '\r')
+#define IS_CRLF(expr) ((expr) == '\n' || (expr) == '\r')
+
+#define PANIC(msg) fprintf(stderr, msg); \
+                   exit(EXIT_FAILURE);
 
 #define SAFE_MALLOC(type, var, count, elemsize) type var = malloc(count * elemsize); \
                                                 if (var == NULL) throw_allocation_error();
