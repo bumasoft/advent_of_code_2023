@@ -26,6 +26,7 @@ void solve_part_one(char* line, size_t line_len, char* prev_line, solution_t* so
                 solution->part_one_sum += num;
                 // we do not want to add this number again when we process the next line of text
                 for (i--; len > 0; len--, i--) line[i] = '.';
+                i += len;
             }
         } else if (IS_SYMBOL(line[i]) && prev_line[i] && cell_is_adjacent_to_num_above(prev_line, i)) {
             // First check to the top left diagonal.
