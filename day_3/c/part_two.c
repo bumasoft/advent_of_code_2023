@@ -3,6 +3,10 @@
 //
 #include "part_two.h"
 
+/* Receives the full input as a char matrix, along with the total line count,
+ * and length of each row in the matrix. Computes the solution for part 2
+ * by looking at numbers adjacent to * symbols in the input.
+ */
 void solve_part_two(char** lines, size_t line_count, size_t line_len, solution_t* solution) {
     for (size_t i = 0; i < line_count; i++) { // traverse lines
         for (size_t j = 0; j < line_len; j++) { // walk each line, char by char

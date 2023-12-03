@@ -3,6 +3,9 @@
 //
 #include "part_one.h"
 
+/* Receives one line of input, along with the previous line and
+ * the length of an input line. Incrementally computes the solution for part 1.
+ */
 void solve_part_one(char* line, size_t line_len, char* prev_line, solution_t* solution) {
     for (size_t i = 0; i < line_len; i++) {
         if (IS_DIGIT(line[i])) {
