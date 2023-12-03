@@ -31,7 +31,6 @@ void solve_part_two(char** lines, size_t line_count, size_t line_len, solution_t
 
             for (size_t i = 0; i < 8; i++) {
                 if (adjacent_nums[i] == 0) continue;
-
                 if (++counter > 2) break;
 
                 prod *= adjacent_nums[i];
