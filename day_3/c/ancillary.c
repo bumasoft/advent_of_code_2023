@@ -44,7 +44,7 @@ char* str_rtrim(char* str) {
     char* head = str;
 
     do str++; while (*str);
-    for(; IS_WHITESPACE(*(str-1)); str--) ;
+    while(IS_WHITESPACE(*(str-1))) str--;
     *str = '\0';
 
     return head;
