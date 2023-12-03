@@ -36,9 +36,8 @@ void solve_part_two(char** lines, size_t line_count, size_t line_len, solution_t
                 prod *= adjacent_nums[i];
             }
 
+            // Only add to solution if gear has EXACTLY 2 adjacent numbers:
             if (counter != 2) continue;
-
-            // Only add to solution if gear has EXACTLY 2 adjacent numbers.
             solution->part_two_sum += prod;
         }
     }
