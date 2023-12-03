@@ -19,7 +19,7 @@ void solve_part_one(char* line, size_t line_len, char* prev_line, solution_t* so
             for (num = 0; IS_DIGIT(line[i]); i++, len++) {
                 num = num * 10 + TO_DIGIT(line[i]);
 
-                is_valid_num |= is_adjacent_to_symbol(i, line, prev_line);
+                is_valid_num |= cell_is_adjacent_to_symbol(line, prev_line, i);
             }
 
             if (is_valid_num) {
@@ -27,7 +27,7 @@ void solve_part_one(char* line, size_t line_len, char* prev_line, solution_t* so
                 // we do not want to add this number again when we process the next line of text
                 for (i--; len > 0; len--, i--) line[i] = '.';
             }
-        } else if (IS_SYMBOL(line[i]) && prev_line[i] && is_adjacent_to_digits_above(i, prev_line)) {
+        } else if (IS_SYMBOL(line[i]) && prev_line[i] && cell_is_adjacent_to_num_above(prev_line, i)) {
             // First check to the top left diagonal.
             uint64_t num = 0;
             size_t j = i;

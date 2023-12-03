@@ -13,14 +13,14 @@ void solve_part_two(char** lines, size_t line_count, size_t line_len, solution_t
             if (lines[i][j] != '*') continue;
 
             // Potential gear found. Detect adjacent numbers:
-            uint64_t left_num = num_at(lines[i], j - 1);
-            uint64_t right_num = num_at(lines[i], j + 1);
-            uint64_t top_num = i > 0 ? num_at(lines[i - 1], j) : 0;
-            uint64_t top_left_num = i > 0 && top_num == 0 ? num_at(lines[i - 1], j - 1) : 0;
-            uint64_t top_right_num = i > 0 && top_num == 0 ? num_at(lines[i - 1], j + 1) : 0;
-            uint64_t bottom_num = i < line_count - 1 ? num_at(lines[i + 1], j) : 0;
-            uint64_t bottom_left_num = i < line_count - 1 && bottom_num == 0 ? num_at(lines[i + 1], j - 1) : 0;
-            uint64_t bottom_right_num = i < line_count - 1 && bottom_num == 0 ? num_at(lines[i + 1], j + 1) : 0;
+            uint64_t left_num = number_at(lines[i], j - 1);
+            uint64_t right_num = number_at(lines[i], j + 1);
+            uint64_t top_num = i > 0 ? number_at(lines[i - 1], j) : 0;
+            uint64_t top_left_num = i > 0 && top_num == 0 ? number_at(lines[i - 1], j - 1) : 0;
+            uint64_t top_right_num = i > 0 && top_num == 0 ? number_at(lines[i - 1], j + 1) : 0;
+            uint64_t bottom_num = i < line_count - 1 ? number_at(lines[i + 1], j) : 0;
+            uint64_t bottom_left_num = i < line_count - 1 && bottom_num == 0 ? number_at(lines[i + 1], j - 1) : 0;
+            uint64_t bottom_right_num = i < line_count - 1 && bottom_num == 0 ? number_at(lines[i + 1], j + 1) : 0;
 
             uint64_t adjacent_nums[8] = {left_num, right_num, top_num, bottom_num,
                                          top_left_num, top_right_num,
