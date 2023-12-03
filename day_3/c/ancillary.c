@@ -33,7 +33,7 @@ char* str_trim(char* str) {
 
     char* head = str;
 
-    do { str++; } while (*str);
+    do str++; while (*str);
 
     for(; IS_WHITESPACE(*(str-1)); str--) ;
     *str = '\0';
