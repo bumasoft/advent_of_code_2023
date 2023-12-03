@@ -6,7 +6,7 @@
 /* Receives one line of input, along with the previous line and
  * the length of an input line. Incrementally computes the solution for part 1.
  */
-void solve_part_one(char* line, size_t line_len, char* prev_line, solution_t* solution) {
+void solve_part_one(char *line, size_t line_len, char *prev_line, solution_t *solution) {
     for (size_t i = 0; i < line_len; i++) {
         if (IS_DIGIT(line[i])) {
             uint64_t num = 0;
@@ -35,17 +35,15 @@ void solve_part_one(char* line, size_t line_len, char* prev_line, solution_t* so
             // Jump to first digit of number, if any.
             while (j > 0 && IS_DIGIT(prev_line[j - 1])) j--;
             // Then construct the number, if any.
-            for (num = 0; IS_DIGIT(prev_line[j]); j++) {
+            for (num = 0; IS_DIGIT(prev_line[j]); j++)
                 num = num * 10 + TO_DIGIT(prev_line[j]);
-            }
 
             solution->part_one_sum += num; // will be 0 if no number was found
 
             // Then check top right diagonal.
             if (i + 1 > j && IS_DIGIT(prev_line[i + 1])) {
-                for (num = 0, j = i + 1; IS_DIGIT(prev_line[j]); j++) {
+                for (num = 0, j = i + 1; IS_DIGIT(prev_line[j]); j++)
                     num = num * 10 + TO_DIGIT(prev_line[j]);
-                }
 
                 solution->part_one_sum += num;
             }
