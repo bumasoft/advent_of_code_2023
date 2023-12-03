@@ -32,7 +32,8 @@ uint64_t number_at(char *line, int i) {
 
     if (i < 0 || !IS_DIGIT(line[i])) return num;
 
-    for (; i > 0 && IS_DIGIT(line[i - 1]); i--);
-    for (; IS_DIGIT(line[i]); i++) num = num * 10 + TO_DIGIT(line[i]);
+    while(i > 0 && IS_DIGIT(line[i - 1])) i--;
+    while(IS_DIGIT(line[i])) num = num * 10 + TO_DIGIT(line[i++]);
+
     return num;
 }
