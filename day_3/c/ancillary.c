@@ -27,16 +27,34 @@ bool str_starts_with(const char* str, const char* test) {
     return !*test;
 }
 
-char* str_trim(char* str) {
+/*
+ * Left trim a string, removing all whitespace (including CRLF).
+ */
+char* str_ltrim(char* str) {
     while(*str && IS_WHITESPACE(*str)) str++;
     if (!*str) return NULL;
 
+    return str;
+}
+
+/*
+ * Right trim a string, removing all whitespace (including CRLF).
+ */
+char* str_rtrim(char* str) {
     char* head = str;
 
     do str++; while (*str);
-
     for(; IS_WHITESPACE(*(str-1)); str--) ;
     *str = '\0';
 
     return head;
+}
+
+/*
+ * Trim a string on both sides, removing all whitespace (including CRLF).
+ */
+char* str_trim(char* str) {
+    if(!(str = str_ltrim(str))) return NULL;
+
+    return str_rtrim(str);
 }
