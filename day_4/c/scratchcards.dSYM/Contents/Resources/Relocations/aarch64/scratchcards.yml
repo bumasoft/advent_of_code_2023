@@ -1,0 +1,22 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     scratchcards
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _open_file_from_args, symObjAddr: 0x0, symBinAddr: 0x1000032AC, symSize: 0xC0 }
+  - { offsetInCU: 0x42, offset: 0x42, size: 0x8, addend: 0x0, symName: _open_file_from_args, symObjAddr: 0x0, symBinAddr: 0x1000032AC, symSize: 0xC0 }
+  - { offsetInCU: 0x86, offset: 0x86, size: 0x8, addend: 0x0, symName: _str_starts_with, symObjAddr: 0xC0, symBinAddr: 0x10000336C, symSize: 0x98 }
+  - { offsetInCU: 0xBC, offset: 0xBC, size: 0x8, addend: 0x0, symName: _str_ltrim, symObjAddr: 0x158, symBinAddr: 0x100003404, symSize: 0x104 }
+  - { offsetInCU: 0xE4, offset: 0xE4, size: 0x8, addend: 0x0, symName: _str_rtrim, symObjAddr: 0x25C, symBinAddr: 0x100003508, symSize: 0x110 }
+  - { offsetInCU: 0x11A, offset: 0x11A, size: 0x8, addend: 0x0, symName: _str_trim, symObjAddr: 0x36C, symBinAddr: 0x100003618, symSize: 0x28 }
+  - { offsetInCU: 0x26, offset: 0x36F, size: 0x8, addend: 0x0, symName: _number_at, symObjAddr: 0x0, symBinAddr: 0x100003640, symSize: 0xF0 }
+  - { offsetInCU: 0x33, offset: 0x37C, size: 0x8, addend: 0x0, symName: _number_at, symObjAddr: 0x0, symBinAddr: 0x100003640, symSize: 0xF0 }
+  - { offsetInCU: 0x26, offset: 0x3FB, size: 0x8, addend: 0x0, symName: _solve_part_one, symObjAddr: 0x0, symBinAddr: 0x100003730, symSize: 0x410 }
+  - { offsetInCU: 0x41, offset: 0x416, size: 0x8, addend: 0x0, symName: _solve_part_one, symObjAddr: 0x0, symBinAddr: 0x100003730, symSize: 0x410 }
+  - { offsetInCU: 0x150, offset: 0x525, size: 0x8, addend: 0x0, symName: _throw_allocation_error, symObjAddr: 0x410, symBinAddr: 0x100003B40, symSize: 0x28 }
+  - { offsetInCU: 0x26, offset: 0x5F4, size: 0x8, addend: 0x0, symName: _recurse_sum, symObjAddr: 0x0, symBinAddr: 0x100003B68, symSize: 0xB8 }
+  - { offsetInCU: 0x33, offset: 0x601, size: 0x8, addend: 0x0, symName: _recurse_sum, symObjAddr: 0x0, symBinAddr: 0x100003B68, symSize: 0xB8 }
+  - { offsetInCU: 0x93, offset: 0x661, size: 0x8, addend: 0x0, symName: _solve_part_two, symObjAddr: 0xB8, symBinAddr: 0x100003C20, symSize: 0xA0 }
+  - { offsetInCU: 0x26, offset: 0x762, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003CC0, symSize: 0x14C }
+  - { offsetInCU: 0x42, offset: 0x77E, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x100003CC0, symSize: 0x14C }
+  - { offsetInCU: 0xA2, offset: 0x7DE, size: 0x8, addend: 0x0, symName: _throw_allocation_error, symObjAddr: 0x14C, symBinAddr: 0x100003E0C, symSize: 0x28 }
+...
