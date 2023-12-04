@@ -25,6 +25,8 @@
                                                 if (var == NULL) throw_allocation_error();
 #define SAFE_CALLOC(type, var, count, elemsize) type var = calloc(count, elemsize); \
                                            if (var == NULL) throw_allocation_error();
+#define SAFE_REALLOC(type, new_var, old_var, count, elemsize) type new_var = realloc(old_var, count * elemsize); \
+                                           if (new_var == NULL) throw_allocation_error();
 
 inline static void throw_allocation_error() {
     fputs("Memory allocation issue.", stderr);

@@ -44,19 +44,16 @@ int main(int argc, char **argv) {
         if (line_count == lines_capacity) {
             // increase capacity
             lines_capacity *= LINES_GROWTH_FACTOR;
-            lines = realloc(lines, lines_capacity);
-
-            if (lines == NULL) throw_allocation_error();
+            SAFE_REALLOC(,lines, lines, lines_capacity, sizeof(char));
         }
         // allocate memory for one line and set contents
-        lines[line_count - 1] = calloc(line_len, sizeof(char));
-        if (lines[line_count - 1] == NULL) throw_allocation_error();
-        memcpy(lines[line_count - 1], line, line_len * sizeof(char));
+        SAFE_CALLOC(, lines[line_count-1], line_len, sizeof(char));
+        strcpy(lines[line_count - 1], line);
 
         solve_part_one(line, line_len, prev_line, &solution);
 
         // update prev_line before moving on to next line
-        for (size_t i = 0; i < line_len; i++) prev_line[i] = line[i];
+        strcpy(prev_line, line);
     }
 
     solve_part_two(lines, line_count, line_len, &solution);
@@ -65,9 +62,7 @@ int main(int argc, char **argv) {
     printf("Part 2: %llu\n", solution.part_two_sum);
 
     // Cleanup:
-    for (size_t i = 0; i < line_count; i++) {
-        free(lines[i]);
-    }
+    for (size_t i = 0; i < line_count; i++) free(lines[i]);
     free(lines);
 
     free(prev_line);
