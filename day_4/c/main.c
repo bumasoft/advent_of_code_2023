@@ -14,13 +14,14 @@ int main(int argc, char **argv) {
 
     FILE *fp = open_file_from_args(argc, argv);
 
-    solution_t solution = {0, 0};
+    solution_t solution = {0, 0, {0}, 0};
 
     SAFE_CALLOC(char*, line, BUFFER_LENGTH, sizeof(char));
 
-    while (fgets(line, BUFFER_LENGTH, fp) && (line = str_trim(line))) {
+    while (fgets(line, BUFFER_LENGTH, fp) && (line = str_trim(line)))
         solve_part_one(line, &solution);
-    }
+
+    solve_part_two(&solution);
 
     printf("Part 1: %llu\n", solution.part_one_sum);
     printf("Part 2: %llu\n", solution.part_two_sum);

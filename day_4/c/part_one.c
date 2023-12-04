@@ -38,9 +38,21 @@ void solve_part_one(char *line, solution_t *solution) {
     for(winning_counter = 0; (winning[winning_counter] = number_at(&winning_nums)); winning_counter++) ;
 
     size_t picked_counter = 0;
-    for(picked_counter = 0; (picked[picked_counter] = number_at(&own_nums)); picked_counter++) ;
+    for (picked_counter = 0; (picked[picked_counter] = number_at(&own_nums)); picked_counter++) ;
+
+    uint64_t matches = 0;
+
+    for (size_t i = 0; i < picked_counter; i++) {
+        for(size_t j = 0; j < winning_counter; j++)
+            if (winning[j] == picked[i]) {
+                sum = sum == 0 ? 1 : 2*sum;
+                matches++;
+                break;
+            }
+    }
 
     solution->part_one_sum += sum;
+    solution->part_two_matches[solution->part_two_match_count++] = matches;
 
     free(winning_nums);
     free(own_nums);

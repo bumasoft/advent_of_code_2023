@@ -36,6 +36,8 @@ inline static void throw_allocation_error() {
 // Typical structure for an Advent of Code puzzle solution
 typedef struct {
     uint64_t part_one_sum;
+    uint64_t part_two_match_count;
+    uint64_t part_two_matches[1000];
     uint64_t part_two_sum;
 } solution_t;
 
