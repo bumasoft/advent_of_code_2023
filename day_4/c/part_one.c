@@ -4,8 +4,8 @@
 #include <string.h>
 #include "part_one.h"
 
-/* Receives one line of input, along with the previous line and
- * the length of an input line. Incrementally computes the solution for part 1.
+/* Receives one line of input, and a pointer to the solution struct.
+ * Incrementally computes the solution for part 1 and gathers the data necessary for part 2.
  */
 void solve_part_one(char *line, solution_t *solution) {
     uint64_t sum = 0;
@@ -18,11 +18,13 @@ void solve_part_one(char *line, solution_t *solution) {
     char* pipe = strchr(line, '|');
     if (pipe == NULL) return;
 
+    // The part between : and | is the list of winning #s
     SAFE_CALLOC(char*, winning_nums, pipe - line + 1, sizeof(char));
     strncpy(winning_nums, line, pipe - line);
     winning_nums[pipe - line] = '\0';
     winning_nums = str_trim(winning_nums);
 
+    // The part after the | is the list of #s picked
     char* end_of_line;
     for (end_of_line = line; *end_of_line && !IS_CRLF(*end_of_line); end_of_line++);
     SAFE_CALLOC(char*, own_nums, end_of_line - pipe + 1, sizeof(char));
@@ -30,7 +32,7 @@ void solve_part_one(char *line, solution_t *solution) {
     own_nums[end_of_line - pipe] = '\0';
     own_nums = str_trim(own_nums);
 
-    // todo: create arrays of numbers
+    // Now process these two sets of numbers into int arrays
     uint64_t winning[50] = {0};
     uint64_t picked[50] = {0};
 
@@ -40,12 +42,14 @@ void solve_part_one(char *line, solution_t *solution) {
     size_t picked_counter = 0;
     for (picked_counter = 0; (picked[picked_counter] = number_at(&own_nums)); picked_counter++) ;
 
-    uint64_t matches = 0;
+    uint64_t matches = 0; // to save the count of winning picks for this card
 
+    // walk the picked numbers array
     for (size_t i = 0; i < picked_counter; i++) {
+        // and check if any # matches another # in the winning #s array
         for(size_t j = 0; j < winning_counter; j++)
             if (winning[j] == picked[i]) {
-                sum = sum == 0 ? 1 : 2*sum;
+                sum = sum == 0 ? 1 : 2 * sum;
                 matches++;
                 break;
             }
