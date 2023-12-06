@@ -9,41 +9,29 @@ bool str_starts_with(const char* str, const char* test) {
     return !*test;
 }
 
-/*
- * Left trim a string, removing all whitespace (including CRLF).
- */
 char* str_ltrim(char* str) {
     if (str == NULL) return str;
 
-    while(*str && IS_WHITESPACE(*str)) str++;
+    while(*str && CHAR_IS_WHITESPACE(*str)) str++;
     return str;
 }
 
-/*
- * Right trim a string, removing all whitespace (including CRLF).
- */
 char* str_rtrim(char* str) {
     if (str == NULL) return NULL;
 
     char* head = str;
 
     do str++; while (*str);
-    do str--; while(IS_WHITESPACE(*str));
+    do str--; while(CHAR_IS_WHITESPACE(*str));
 
     *(str+1) = '\0';
     return head;
 }
 
-/*
- * Trim a string on both sides, removing all whitespace (including CRLF).
- */
-char* str_trim(char* str) {
+inline char* str_trim(char* str) {
     return str_rtrim(str_ltrim(str));
 }
 
-/*
- * Splits a string on a delimiter and returns an array of component strings.
- */
 vector_t str_split(char* str, char* delimiter) {
     size_t delim_len = strlen(delimiter);
     vector_t vec = vector_init(.length = 0, .capacity = 25);
