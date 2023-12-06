@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CLionExternalBuildManager">
+    <target id="3c99652c-cad8-4458-844a-540e6a490150" name="Make Program" defaultType="MAKE">
+      <configuration id="ae68e9c9-fc93-4c09-91f1-4fc97c27f4be" name="Make Program">
+        <build type="MAKE">
+          <make targetName="debug" />
+        </build>
+        <clean type="MAKE">
+          <make targetName="clean" />
+        </clean>
+      </configuration>
+    </target>
+  </component>
+</project>
