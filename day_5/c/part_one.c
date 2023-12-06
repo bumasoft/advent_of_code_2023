@@ -5,6 +5,12 @@
 #include "part_one.h"
 #include "aoc.h"
 
+#define NUM_MAPS 7
+
+/*
+ * Reads a map from the input file and stores it into a matrix.
+ * Starts by skipping any blank lines. Stops processing on blank line or EOF.
+ */
 vector_t get_map(FILE* fp, char* line_buffer, const char* map_id) {
     vector_t result = vector_init();
 
@@ -32,6 +38,9 @@ vector_t get_map(FILE* fp, char* line_buffer, const char* map_id) {
     return result;
 }
 
+/*
+ * Receives a source value and maps it to a destination value based on the specified map.
+ */
 uint64_t match_on_map(uint64_t src, vector_t* map) {
     for (size_t i = 0; i < map->length; i++) {
         vector_t *row = (vector_t *) _vector_get(map, i)._ptr;
@@ -48,9 +57,19 @@ uint64_t match_on_map(uint64_t src, vector_t* map) {
     return src;
 }
 
+uint64_t match_recurse(uint64_t src, size_t total, vector_t* maps[total], size_t i) {
+    uint64_t num = match_on_map(src, maps[i]);
+
+    if (i == 6) return num;
+
+    return  match_recurse(num, total, maps, i+1);
+}
+
 void solve_part_one(FILE* fp, vector_t* seeds, solution_t *solution) {
+    // Line buffer:
     SAFE_CALLOC(char*, buffer, BUFFER_LENGTH, sizeof(char));
 
+    // Get all required maps:
     vector_t seed_to_soil_map = get_map(fp, buffer, "seed-to-soil");
     vector_t soil_to_fertilizer_map = get_map(fp, buffer, "soil-to-fertilizer");
     vector_t fertilizer_to_water_map = get_map(fp, buffer, "fertilizer-to-water");
@@ -59,22 +78,19 @@ void solve_part_one(FILE* fp, vector_t* seeds, solution_t *solution) {
     vector_t temp_to_humidity_map = get_map(fp, buffer, "temperature-to-humidity");
     vector_t humidity_to_loc_map = get_map(fp, buffer, "humidity-to-location");
 
+    vector_t* maps[NUM_MAPS] = {&seed_to_soil_map, &soil_to_fertilizer_map,
+                         &fertilizer_to_water_map, &water_to_light_map,
+                         &light_to_temp_map, &temp_to_humidity_map,
+                         &humidity_to_loc_map };
+
     uint64_t minimum = UINT64_MAX;
 
+    // Loop through seeds:
     for(size_t i = 0; i < seeds->length; i++) {
         uint64_t seed = _vector_get(seeds, i)._uint64;
+        uint64_t location = match_recurse(seed, NUM_MAPS, maps, 0);
 
-        uint64_t soil_num = match_on_map(seed, &seed_to_soil_map);
-        uint64_t fert_num = match_on_map(soil_num, &soil_to_fertilizer_map);
-        uint64_t water_num = match_on_map(fert_num, &fertilizer_to_water_map);
-        uint64_t light_num = match_on_map(water_num, &water_to_light_map);
-        uint64_t temp_num = match_on_map(light_num, &light_to_temp_map);
-        uint64_t humidity_num = match_on_map(temp_num, &temp_to_humidity_map);
-        uint64_t location_num = match_on_map(humidity_num, &humidity_to_loc_map);
-
-        printf("- Seed %llu, soil %llu, fertilizer %llu, water %llu, light %llu, temperature %llu, humidity %llu, location %llu\n\n", seed, soil_num, fert_num, water_num, light_num, temp_num, humidity_num, location_num);
-
-        if (location_num < minimum) minimum = location_num;
+        if (location < minimum) minimum = location;
     }
 
     solution->part_one = minimum;
