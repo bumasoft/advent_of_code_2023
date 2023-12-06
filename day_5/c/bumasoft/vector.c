@@ -65,6 +65,8 @@ vector_item_t _vector_pop(vector_t* vec) {
     vector_item_t item = _vector_get(vec, vec->length - 1 );
     vec->length--;
 
+    if (vec->length == 0) _vector_free(vec);
+
     return item;
 }
 
