@@ -38,4 +38,3 @@ int main(int argc, char **argv) {
     _vector_free(&seeds);
     _vector_free(&by_semi);
 }
-#pragma clang diagnostic pop
