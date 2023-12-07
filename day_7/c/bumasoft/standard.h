@@ -10,6 +10,4 @@
 #include "vector.h"
 #include "string.h"
 
-#define PANIC(msg) { fprintf(stderr, msg); exit(EXIT_FAILURE); }
-
 #endif //C_ANCILLARY_H
