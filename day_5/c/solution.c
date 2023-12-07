@@ -68,7 +68,7 @@ uint64_t match_on_map(uint64_t src, vector_t* map) {
 uint64_t match_recurse(uint64_t src, size_t total, vector_t* maps[total], size_t i) {
     uint64_t num = match_on_map(src, maps[i]);
 
-    if (i == 6) return num;
+    if (i == total - 1) return num;
 
     return  match_recurse(num, total, maps, i+1);
 }
