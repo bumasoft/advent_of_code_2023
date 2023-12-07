@@ -60,13 +60,14 @@ typedef struct {
 
 typedef struct vector_struct vector_t;
 
-typedef vector_item_t (*VectorItemGet)(void* vec, size_t i);
-typedef bool (*VectorItemSet)(void* vec, size_t i, vector_item_t item);
-typedef vector_item_t (*VectorItemPushString)(void* vec, char* str);
-typedef vector_item_t (*VectorItemPush)(void* vec, vector_item_t item);
-typedef vector_item_t (*VectorItemPop)(void* vec);
-typedef vector_t (*VectorToU64)(void* vec);
-typedef void (*VectorFree)(void* vec);
+typedef vector_item_t (*VectorItemGet)(vector_t* vec, size_t i);
+typedef bool (*VectorItemSet)(vector_t* vec, size_t i, vector_item_t item);
+typedef void (*VectorAppend)(vector_t* vec, vector_t extra);
+typedef vector_item_t (*VectorItemPushString)(vector_t* vec, char* str);
+typedef vector_item_t (*VectorItemPush)(vector_t* vec, vector_item_t item);
+typedef vector_item_t (*VectorItemPop)(vector_t* vec);
+typedef vector_t (*VectorToU64)(vector_t* vec);
+typedef void (*VectorFree)(vector_t* vec);
 
 struct vector_struct {
     size_t capacity;
@@ -74,6 +75,7 @@ struct vector_struct {
     size_t length;
     VectorItemGet get;
     VectorItemSet set;
+    VectorAppend append;
     VectorItemPushString push_string;
     VectorItemPush push;
     VectorItemPop pop;
@@ -85,12 +87,14 @@ struct vector_struct {
 #define vector_init(...) _vector_init((vector_t){.length=0,.capacity=VECTOR_DEFAULT_CAPACITY,.growth_factor=VECTOR_DEFAULT_GROWTH_FACTOR,.items=NULL, __VA_ARGS__})
 
 vector_t _vector_init(vector_t vinit);
-vector_item_t _vector_get(vector_t *vec, size_t i);
-bool _vector_set(vector_t *vec, size_t i, vector_item_t);
+vector_item_t _vector_get(vector_t* vec, size_t i);
+bool _vector_set(vector_t* vec, size_t i, vector_item_t);
+void _vector_append(vector_t* vec, vector_t extra);
 vector_item_t _vector_push_string(vector_t* vec, char* str);
-vector_item_t _vector_push(vector_t *vec, vector_item_t item);
-vector_item_t _vector_pop(vector_t *vec);
-vector_t _vector_to_u64(vector_t *vec);
+vector_item_t _vector_push(vector_t* vec, vector_item_t item);
+vector_item_t _vector_pop(vector_t* vec);
+vector_t _vector_to_u64(vector_t* vec);
+
 void _vector_free(vector_t *vec);
 
 #endif //BUMASOFT_VECTOR_H

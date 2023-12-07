@@ -3,8 +3,7 @@
 */
 #include <string.h>
 #include "aoc.h"
-#include "part_one.h"
-#include "part_two.h"
+#include "solution.h"
 
 int main(int argc, char **argv) {
     puts("**** Advent of Code, Day 4, 2023 ****\n");
@@ -28,7 +27,7 @@ int main(int argc, char **argv) {
     vector_t seeds = str_split(seeds_str, " ");
     seeds.to_u64(&seeds);
 
-    solve_part_one(fp, &seeds, &solution);
+    solve(fp, &seeds, &solution);
 
     printf("Part 1: %llu\n", solution.part_one);
     printf("Part 2: %llu\n", solution.part_two);

@@ -20,6 +20,34 @@ bool _vector_set(vector_t *vec, size_t i, vector_item_t item) {
     return memcpy(&vec->items[i], &item, size);
 }
 
+void _vector_append(vector_t* dest_vec, vector_t src_vec) {
+    if (src_vec.length == 0) return;
+
+    size_t size = sizeof(vector_item_t);
+
+    if (dest_vec->length == 0) {
+        // Simple scenario, we just make a copy of extra:
+        SAFE_CALLOC(, dest_vec->items, src_vec.capacity, size);
+
+        memcpy(dest_vec->items, src_vec.items, src_vec.length * size);
+        dest_vec->length = src_vec.length;
+        dest_vec->growth_factor = src_vec.growth_factor;
+
+        return;
+    }
+
+    // Ensure our destination vector has enough capacity, then copy the additional items to the end:
+    size_t required_capacity = dest_vec->length + src_vec.length;
+    if (required_capacity >= dest_vec->capacity) {
+        dest_vec->capacity = required_capacity;
+
+        SAFE_REALLOC(, dest_vec->items, dest_vec->items, dest_vec->capacity, size);
+    }
+
+    memcpy(&dest_vec->items[dest_vec->length], src_vec.items, src_vec.length * size);
+    dest_vec->length = required_capacity;
+}
+
 vector_item_t _vector_push(vector_t* vec, vector_item_t item) {
     if (item.is_empty) return item;
 
@@ -88,13 +116,14 @@ vector_t _vector_init(vector_t vinit) {
             .growth_factor = vinit.growth_factor > 0 ? vinit.growth_factor : VECTOR_DEFAULT_GROWTH_FACTOR,
             .capacity = vinit.capacity > 0 ? vinit.capacity : VECTOR_DEFAULT_CAPACITY,
             .items = items,
-            .get = (vector_item_t (*)(void* vec, size_t i)) _vector_get,
-            .set = (bool (*)(void* vec, size_t i, vector_item_t item)) _vector_set,
-            .push_string = (vector_item_t (*)(void* vec, char* str)) _vector_push_string,
-            .push = (vector_item_t (*)(void* vec, vector_item_t item)) _vector_push,
-            .pop = (vector_item_t (*)(void* vec)) _vector_pop,
-            .to_u64 = (vector_t (*)(void* vec)) _vector_to_u64,
-            .free = (void (*)(void* vec)) _vector_free,
+            .get = (vector_item_t (*)(vector_t* vec, size_t i)) _vector_get,
+            .set = (bool (*)(vector_t* vec, size_t i, vector_item_t item)) _vector_set,
+            .append = (void (*)(vector_t* vec, vector_t extra)) _vector_append,
+            .push_string = (vector_item_t (*)(vector_t* vec, char* str)) _vector_push_string,
+            .push = (vector_item_t (*)(vector_t* vec, vector_item_t item)) _vector_push,
+            .pop = (vector_item_t (*)(vector_t* vec)) _vector_pop,
+            .to_u64 = (vector_t (*)(vector_t* vec)) _vector_to_u64,
+            .free = (void (*)(vector_t* vec)) _vector_free,
     };
 
     return vec;

@@ -6,8 +6,8 @@ debug: CXXFLAGS += -DDEBUG -g
 debug: CCFLAGS += -DDEBUG -g
 debug: executable
 
-executable: main.c bumasoft/*.h aoc.h part_one.h part_two.h
-	$(CC) $(CCFLAGS) -o $(EXE_FILE) bumasoft/*.c part_one.c part_two.c main.c
+executable: main.c bumasoft/*.h aoc.h solution.h
+	$(CC) $(CCFLAGS) -o $(EXE_FILE) bumasoft/*.c solution.c main.c
 
 clean:
 	rm $(EXE_FILE) && rm -rf $(EXE_FILE).dSYM

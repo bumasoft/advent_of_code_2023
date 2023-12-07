@@ -7,5 +7,5 @@
 #include "bumasoft/standard.h"
 #include "aoc.h"
 
-void solve_part_one(FILE* fp, vector_t* seeds, solution_t* solution);
+void solve(FILE* fp, vector_t* seeds, solution_t* solution);
 #endif //C_PART_ONE_H
