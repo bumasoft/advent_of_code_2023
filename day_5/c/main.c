@@ -19,7 +19,7 @@ int main(int argc, char **argv) {
 
     if (!line || !str_starts_with(line, "seeds: ")) {
         fprintf(stderr, "Invalid input file.");
-        exit(-1);
+        exit(EXIT_FAILURE);
     }
 
     vector_t by_semi = str_split(line, ": ");
