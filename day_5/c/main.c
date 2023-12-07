@@ -33,8 +33,9 @@ int main(int argc, char **argv) {
     printf("Part 2: %llu\n", solution.part_two);
 
     // Cleanup:
-    free(line);
-
     fclose(fp);
+    free(line);
+    _vector_free(&seeds);
+    _vector_free(&by_semi);
 }
 #pragma clang diagnostic pop
