@@ -12,29 +12,36 @@ int main(int argc, char **argv) {
 
     solution_t solution = {0, 0};
 
-    SAFE_CALLOC(char*, line, BUFFER_LENGTH, sizeof(char));
+    SAFE_CALLOC(char*, line1, BUFFER_LENGTH, sizeof(char));
+    SAFE_CALLOC(char*, line2, BUFFER_LENGTH, sizeof(char));
 
-    fgets(line, BUFFER_LENGTH, fp);
-    line = str_trim(line);
+    char time_tag[] = "Time:";
+    char dist_tag[] = "Distance:";
 
-    if (!line || !str_starts_with(line, "seeds: ")) {
+    fgets(line1, BUFFER_LENGTH, fp);
+    char* time_str = str_trim(line1);
+
+    if (!time_str || !str_starts_with(time_str, time_tag)) {
         fprintf(stderr, "Invalid input file.");
         exit(EXIT_FAILURE);
     }
 
-    vector_t by_semi = str_split(line, ": ");
-    char* seeds_str = str_trim( (char*) _vector_get(&by_semi, 1)._ptr );
-    vector_t seeds = str_split(seeds_str, " ");
-    seeds.to_u64(&seeds);
+    fgets(line2, BUFFER_LENGTH, fp);
+    char* dist_str = str_trim(line2);
 
-    solve(fp, &seeds, &solution);
+    if (!dist_str || !str_starts_with(dist_str, dist_tag)) {
+        fprintf(stderr, "Invalid input file.");
+        exit(EXIT_FAILURE);
+    }
+
+    solve_part_one(time_str, dist_str, time_tag, dist_tag, &solution);
+    solve_part_two(time_str, dist_str, &solution);
 
     printf("Part 1: %llu\n", solution.part_one);
     printf("Part 2: %llu\n", solution.part_two);
 
     // Cleanup:
     fclose(fp);
-    free(line);
-    _vector_free(&seeds);
-    _vector_free(&by_semi);
+    free(line1);
+    free(line2);
 }
