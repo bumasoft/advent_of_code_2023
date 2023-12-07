@@ -174,6 +174,8 @@ void solve(FILE* fp, vector_t* seeds, solution_t *solution) {
             for (size_t j = 0; j < result.length - 1; j += 2) {
                 vector_t data = match_range_on_map(result.get(&result, j)._uint64, result.get(&result, j + 1)._uint64, maps[k]);
                 ranges.append(&ranges, data);
+
+                _vector_free(&data);
             }
             result = ranges;
             k++;
