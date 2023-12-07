@@ -154,7 +154,7 @@ void solve(FILE* fp, vector_t* seeds, solution_t *solution) {
     /*
      * PART 2
      */
-    if (seeds->length %2 != 0) {
+    if (seeds->length % 2 != 0) {
         fprintf(stderr, "Invalid seed array. Must be even length.");
         exit(EXIT_FAILURE);
     }
