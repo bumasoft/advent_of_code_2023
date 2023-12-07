@@ -82,7 +82,7 @@ vector_t match_range_on_map(uint64_t src, uint64_t src_range, vector_t* map) {
     vector_t result = vector_init();
 
     for (size_t i = 0; i < map->length; i++) {
-        vector_t *row = (vector_t *) _vector_get(map, i)._ptr;
+        vector_t* row = (vector_t *) _vector_get(map, i)._ptr;
 
         uint64_t dest_start = _vector_get(row, 0)._uint64;
         uint64_t src_start = _vector_get(row, 1)._uint64;
