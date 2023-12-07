@@ -70,7 +70,7 @@ uint64_t match_recurse(uint64_t src, size_t total, vector_t* maps[total], size_t
 
     if (i == total - 1) return num;
 
-    return  match_recurse(num, total, maps, i+1);
+    return  match_recurse(num, total, maps, i + 1);
 }
 
 /*
