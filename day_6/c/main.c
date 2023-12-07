@@ -6,7 +6,7 @@
 #include "solution.h"
 
 int main(int argc, char **argv) {
-    puts("**** Advent of Code, Day 5, 2023 ****\n");
+    puts("**** Advent of Code, Day 6, 2023 ****\n");
 
     FILE *fp = open_file_from_args(argc, argv);
 
