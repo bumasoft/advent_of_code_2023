@@ -28,7 +28,8 @@ static const char CHAR_MAP_PART2[13] = "J23456789TQKA";
 size_t hash_code(char c, bool with_jokers);
 
 int compare_ints(const void *a, const void *b);
-int compare_hands(const void *a, const void *b);
+int compare_hands(const void *a, const void *b, bool with_jokers);
+int compare_hands_part_one(const void *a, const void *b);
 int compare_hands_part_two(const void *a, const void *b);
 hand_type_t get_hand_type(vector_t* cards, bool with_jokers);
 

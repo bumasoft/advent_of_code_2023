@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
     }
 
     // Sort hands for part 1
-    qsort(hands.items, hands.length, sizeof(vector_item_t), compare_hands);
+    qsort(hands.items, hands.length, sizeof(vector_item_t), compare_hands_part_one);
 
     // Compute sum for part 1
     for (size_t j = 0; j < hands.length; j++) {
@@ -56,7 +56,7 @@ int main(int argc, char **argv) {
     // Sort hands for part 2
     qsort(hands.items, hands.length, sizeof(vector_item_t), compare_hands_part_two);
 
-    for (size_t i = 0; i < hands.length; i++) {
+    for (int i = hands.length - 1; i >= 0; i--) {
         vector_t* hand = (vector_t*) hands.get(&hands, i)._ptr;
         vector_t* cards = (vector_t*) hand->get(hand, 0)._ptr;
         uint64_t bid = hand->get(hand, 1)._uint64;
@@ -66,7 +66,8 @@ int main(int argc, char **argv) {
             printf("%c", cards->get(cards, j)._char);
         }
 
-        printf("\t%llu = %u\n", bid, type);
+        printf("\t%llu\tRANK %zu\tTYPE %u\n", bid, hands.length - i, type);
+        //printf("\t%llu\tRANK %zu\n", bid, hands.length - i);
     }
 
     // Compute sum for part 2
