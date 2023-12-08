@@ -1,8 +1,8 @@
 # C Language Implementation
 
-## Problem: Day 6: Day 6: Wait For It
+## Problem: Day 7: Day 7: Camel Cards
 
-See [main README](https://github.com/bumasoft/advent_of_code_2023/blob/main/day_6/README.md) file for Day 6.
+See [main README](https://github.com/bumasoft/advent_of_code_2023/blob/main/day_7/README.md) file for Day 7.
 
 ### Buidling
 
@@ -10,4 +10,4 @@ See [main README](https://github.com/bumasoft/advent_of_code_2023/blob/main/day_
 
 ### Running
 
-Example command: `waitforit input.txt`
+Example command: `camelcards input.txt`
