@@ -8,6 +8,7 @@
 #include "io.h"
 #include "alloc.h"
 #include "vector.h"
+#include "hashmap.h"
 #include "string.h"
 
 #endif //C_ANCILLARY_H

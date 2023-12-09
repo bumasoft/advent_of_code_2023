@@ -12,6 +12,20 @@ vector_item_t _vector_get(vector_t* vec, size_t i) {
     return vec->items[i];
 }
 
+vector_item_t _vector_first(vector_t* vec) {
+    if (vec == NULL || vec->length == 0 || vec->items == NULL)
+        return (vector_item_t){.is_empty = true};
+
+    return vec->items[0];
+}
+
+vector_item_t _vector_last(vector_t* vec) {
+    if (vec == NULL || vec->length == 0 || vec->items == NULL)
+        return (vector_item_t){.is_empty = true};
+
+    return vec->items[vec->length - 1];
+}
+
 bool _vector_set(vector_t *vec, size_t i, vector_item_t item) {
     if (vec == NULL || i >= vec->length) return false;
 
@@ -116,6 +130,8 @@ vector_t _vector_init(vector_t vinit) {
             .growth_factor = vinit.growth_factor > 0 ? vinit.growth_factor : VECTOR_DEFAULT_GROWTH_FACTOR,
             .capacity = vinit.capacity > 0 ? vinit.capacity : VECTOR_DEFAULT_CAPACITY,
             .items = items,
+            .first = (vector_item_t (*)(vector_t* vec)) _vector_first,
+            .last = (vector_item_t (*)(vector_t* vec)) _vector_last,
             .get = (vector_item_t (*)(vector_t* vec, size_t i)) _vector_get,
             .set = (bool (*)(vector_t* vec, size_t i, vector_item_t item)) _vector_set,
             .append = (void (*)(vector_t* vec, vector_t extra)) _vector_append,

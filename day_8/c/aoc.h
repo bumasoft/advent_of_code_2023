@@ -6,7 +6,7 @@
 #define AOC_H
 #include <stdint.h>
 
-#define BUFFER_LENGTH 255
+#define BUFFER_LENGTH 500
 #define SMALL_BUFFER_LENGTH 32
 
 // Typical structure for an Advent of Code puzzle solution

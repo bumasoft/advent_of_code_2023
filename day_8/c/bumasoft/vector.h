@@ -46,6 +46,7 @@ typedef struct {
 } vector_item_t;
 
 #define VEC_ITEMS (vector_item_t [])
+
 #define VEC_CHAR(c) ((vector_item_t){.is_empty=false, .type=VECTOR_ITEM_CHAR, ._char=(c)})
 #define VEC_INT(num) ((vector_item_t){.is_empty=false, .type=VECTOR_ITEM_INT, ._int=(num)})
 #define VEC_I8(num) ((vector_item_t){.is_empty=false, .type=VECTOR_ITEM_INT8, ._int8=(num)})
@@ -61,6 +62,8 @@ typedef struct {
 typedef struct vector_struct vector_t;
 
 typedef vector_item_t (*VectorItemGet)(vector_t* vec, size_t i);
+typedef vector_item_t (*VectorItemFirst)(vector_t* vec);
+typedef vector_item_t (*VectorItemLast)(vector_t* vec);
 typedef bool (*VectorItemSet)(vector_t* vec, size_t i, vector_item_t item);
 typedef void (*VectorAppend)(vector_t* vec, vector_t extra);
 typedef vector_item_t (*VectorItemPushString)(vector_t* vec, char* str);
@@ -73,6 +76,8 @@ struct vector_struct {
     size_t capacity;
     double growth_factor;
     size_t length;
+    VectorItemFirst first;
+    VectorItemLast last;
     VectorItemGet get;
     VectorItemSet set;
     VectorAppend append;
@@ -91,6 +96,8 @@ struct vector_struct {
 vector_t _vector_init(vector_t vinit);
 vector_t* _vector_init_ptr(vector_t vinit);
 vector_item_t _vector_get(vector_t* vec, size_t i);
+vector_item_t _vector_first(vector_t* vec);
+vector_item_t _vector_last(vector_t* vec);
 bool _vector_set(vector_t* vec, size_t i, vector_item_t);
 void _vector_append(vector_t* vec, vector_t extra);
 vector_item_t _vector_push_string(vector_t* vec, char* str);
