@@ -14,7 +14,6 @@ int main(int argc, char **argv) {
 
     // line buffer
     SAFE_CALLOC(char*, line, BUFFER_LENGTH, sizeof(char));
-    char *line_head = line;
 
     // get first non-empty line
     while (fgets(line, BUFFER_LENGTH, fp) && !(line = str_trim(line)));
@@ -66,6 +65,5 @@ int main(int argc, char **argv) {
 
     // Cleanup:
     fclose(fp);
-    free(line_head);
     free(actions);
 }
