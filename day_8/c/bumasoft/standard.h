@@ -10,5 +10,6 @@
 #include "vector.h"
 #include "hashmap.h"
 #include "string.h"
+#include "math.h"
 
 #endif //C_ANCILLARY_H
