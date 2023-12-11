@@ -18,8 +18,6 @@ int main(int argc, char **argv) {
     vector_t histories = vector_init();
 
     while (fgets(line, BUFFER_LENGTH, fp)) {
-        if (!(line = str_trim(line)) || !*line) continue; // skip empty lines
-
         vector_t* history = str_split_by_whitespace(line);
         history->to_u64(history);
 
@@ -27,6 +25,7 @@ int main(int argc, char **argv) {
     }
 
     solve_part_one(&histories, &solution);
+    solve_part_two(&histories, &solution);
 
     printf("Part 1: %llu\n", solution.part_one);
     printf("Part 2: %llu\n", solution.part_two);

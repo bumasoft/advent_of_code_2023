@@ -7,6 +7,12 @@
 #include "aoc.h"
 #include "bumasoft/vector.h"
 
-uint64_t part_one_extrapolate(vector_t* history);
+typedef enum {
+    PART_ONE,
+    PART_TWO
+} part_t;
+
+uint64_t extrapolate(vector_t* history, part_t part);
 void solve_part_one(vector_t* histories, solution_t* solution);
+void solve_part_two(vector_t* histories, solution_t* solution);
 #endif //README_MD_SOLUTION_H

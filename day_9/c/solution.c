@@ -4,7 +4,7 @@
 
 #include "solution.h"
 
-uint64_t part_one_extrapolate(vector_t* history) {
+uint64_t extrapolate(vector_t* history, part_t part) {
     vector_t* diffs = vector_init_ptr();
 
     bool all_zeroes = true;
@@ -16,17 +16,27 @@ uint64_t part_one_extrapolate(vector_t* history) {
         all_zeroes &= (diff == 0);
     }
 
-    uint64_t last_item = history->get(history, history->length - 1)._uint64;
+    uint64_t item = history->get(history, part == PART_ONE ? history->length - 1 : 0)._uint64;
 
-    if (all_zeroes) return 0 + last_item;
+    if (all_zeroes) return item;
 
-    return part_one_extrapolate(diffs) + last_item;
+    uint64_t extrapolate_next = extrapolate(diffs, part);
+
+    return part == PART_ONE ? extrapolate_next + item : item - extrapolate_next;
 }
 
 void solve_part_one(vector_t* histories, solution_t* solution) {
     for (size_t i = 0; i < histories->length; i++) {
-        uint64_t next_value = part_one_extrapolate(_vector_get(histories, i)._ptr);
+        uint64_t next_value = extrapolate(_vector_get(histories, i)._ptr, PART_ONE);
 
         solution->part_one += next_value;
+    }
+}
+
+void solve_part_two(vector_t* histories, solution_t* solution) {
+    for (size_t i = 0; i < histories->length; i++) {
+        uint64_t next_value = extrapolate(_vector_get(histories, i)._ptr, PART_TWO);
+
+        solution->part_two += next_value;
     }
 }
