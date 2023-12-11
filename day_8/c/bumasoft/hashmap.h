@@ -25,11 +25,11 @@ hashmap_kv_pair_t* _hashmap_get(hashmap_t* map, char* key);
 typedef bool (*HashmapFuncPut)(hashmap_t* map, char* key, void* value);
 bool _hashmap_put(hashmap_t* map, char* key, void* value);
 
-typedef bool (*HashmapFuncUpdate)(char* key, void* value);
-bool _hashmap_update(char* key, void* value);
+typedef bool (*HashmapFuncUpdate)(hashmap_t* map, char* key, void* value);
+bool _hashmap_update(hashmap_t* map, char* key, void* value);
 
-typedef void* (*HashmapFuncDel)(char* key);
-void _hashmap_del(char* key);
+typedef bool (*HashmapFuncDel)(hashmap_t* map, char* key);
+bool _hashmap_del(hashmap_t* map, char* key);
 
 typedef void (*HashmapFuncFree)(hashmap_t* map);
 void _hashmap_free(hashmap_t* map);

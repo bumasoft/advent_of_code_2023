@@ -81,6 +81,58 @@ bool _hashmap_put(hashmap_t* map, char* key, void* value) {
     return true;
 }
 
+bool _hashmap_update(hashmap_t* map, char* key, void* value) {
+    if (map == NULL) return false;
+
+    size_t index = _hashmap_hash(key);
+
+    if (index >= BUCKETS_COUNT) return false;
+
+    hashmap_kv_pair_t* node = map->buckets[index];
+
+    if (node == NULL) return false;
+
+    while (node != NULL && strcmp(node->key, key) != 0)
+        node = node->next;
+
+    if (node == NULL) return false;
+
+    node->value = value;
+
+    return true;
+}
+
+bool _hashmap_del(hashmap_t* map, char* key) {
+    if (map == NULL) return false;
+
+    size_t index = _hashmap_hash(key);
+
+    if (index >= BUCKETS_COUNT) return false;
+
+    hashmap_kv_pair_t* node = map->buckets[index];
+
+    if (node == NULL) return false;
+
+    if (node->next == NULL) {
+        free(node);
+        return true;
+    }
+
+    hashmap_kv_pair_t* prev_node = node;
+
+    while (node != NULL && strcmp(node->key, key) != 0) {
+        prev_node = node;
+        node = node->next;
+    }
+
+    if (node == NULL) return false;
+
+    free(node);
+    prev_node->next = NULL;
+
+    return true;
+}
+
 /*
  * Allocates a new hashmap on the heap.
  */
@@ -90,6 +142,8 @@ hashmap_t* _hashmap_init() {
     new_hashmap->free = _hashmap_free;
     new_hashmap->get = _hashmap_get;
     new_hashmap->put = _hashmap_put;
+    new_hashmap->update = _hashmap_update;
+    new_hashmap->del = _hashmap_del;
 
     return new_hashmap;
 }
