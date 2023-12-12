@@ -29,6 +29,21 @@ size_t _hashmap_hash(char* key) {
 void _hashmap_free(hashmap_t* map) {
     if (map == NULL) return;
 
+    for (size_t i = 0; i < BUCKETS_COUNT; i++) {
+        if (map->buckets[i] == NULL) continue;
+
+        hashmap_kv_pair_t* node = map->buckets[i];
+
+        while (node != NULL) {
+            hashmap_kv_pair_t* next_node = node->next;
+
+            free(node->key);
+            if (node->value != NULL) free(node->value);
+            free(node);
+            node = next_node;
+        }
+    }
+
     free(map);
 }
 

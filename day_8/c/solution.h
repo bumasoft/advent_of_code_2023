@@ -30,7 +30,7 @@ typedef struct DoublyLinkedList Node;
 #define P2_IS_START(tag) (tag[TAG_LENGTH - 1] == 'A')
 #define P2_IS_END(tag) (tag[TAG_LENGTH - 1] == 'Z')
 
-void solve_part_one(char* actions, size_t actions_len, hashmap_t* nodes, solution_t* solution);
-void solve_part_two(vector_t p2_start_nodes, hashmap_t* nodes, char* actions, size_t actions_len, solution_t* solution);
+void solve_part_one(const char* actions, size_t actions_len, hashmap_t* nodes, solution_t* solution);
+void solve_part_two(vector_t p2_start_nodes, hashmap_t* nodes, const char* actions, size_t actions_len, solution_t* solution);
 
 #endif //README_MD_SOLUTION_H

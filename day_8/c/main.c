@@ -56,6 +56,14 @@ int main(int argc, char **argv) {
         if (P2_IS_START(node->tag)) _vector_push_string(&p2_start_nodes, node_name);
 
         nodes->put(nodes, node_name, node);
+
+        // Some cleanup:
+        for (size_t i = 0; i < by_comma.length; i++)
+            free(by_comma.get(&by_comma, i)._ptr);
+        _vector_free_items(&by_comma);
+        for (size_t i = 0; i < by_equals.length; i++)
+            free(by_equals.get(&by_equals, i)._ptr);
+        _vector_free_items(&by_equals);
     };
 
     solve_part_one(actions, actions_len, nodes, &solution);
@@ -68,4 +76,9 @@ int main(int argc, char **argv) {
     fclose(fp);
     free(actions);
     free(line_head);
+    nodes->free(nodes);
+
+    for (size_t i = 0; i < p2_start_nodes.length; i++)
+        free(_vector_get(&p2_start_nodes, i)._ptr);
+    _vector_free_items(&p2_start_nodes);
 }

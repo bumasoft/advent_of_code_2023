@@ -4,7 +4,7 @@
 
 #include "solution.h"
 
-void solve_part_one(char* actions, size_t actions_len, hashmap_t* nodes, solution_t* solution) {
+void solve_part_one(const char* actions, size_t actions_len, hashmap_t* nodes, solution_t* solution) {
     bool reached_end = false;
     char current_node[3] = P1_START_NODE;
 
@@ -32,7 +32,7 @@ void solve_part_one(char* actions, size_t actions_len, hashmap_t* nodes, solutio
     }
 }
 
-void solve_part_two(vector_t p2_start_nodes, hashmap_t* nodes, char* actions, size_t actions_len, solution_t* solution) {
+void solve_part_two(vector_t p2_start_nodes, hashmap_t* nodes, const char* actions, size_t actions_len, solution_t* solution) {
     uint64_t path_lengths[p2_start_nodes.length];
 
     // traverse each path and save the path length

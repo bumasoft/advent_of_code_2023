@@ -70,6 +70,7 @@ typedef vector_item_t (*VectorItemPushString)(vector_t* vec, char* str);
 typedef vector_item_t (*VectorItemPush)(vector_t* vec, vector_item_t item);
 typedef vector_item_t (*VectorItemPop)(vector_t* vec);
 typedef vector_t (*VectorToU64)(vector_t* vec);
+typedef void (*VectorFreeItems)(vector_t* vec);
 typedef void (*VectorFree)(vector_t* vec);
 
 struct vector_struct {
@@ -85,6 +86,7 @@ struct vector_struct {
     VectorItemPush push;
     VectorItemPop pop;
     VectorToU64 to_u64;
+    VectorFreeItems free_items;
     VectorFree free;
     vector_item_t* items;
 };
@@ -105,6 +107,7 @@ vector_item_t _vector_push(vector_t* vec, vector_item_t item);
 vector_item_t _vector_pop(vector_t* vec);
 vector_t _vector_to_u64(vector_t* vec);
 
+void _vector_free_items(vector_t *vec);
 void _vector_free(vector_t *vec);
 
 #endif //BUMASOFT_VECTOR_H
