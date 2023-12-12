@@ -175,8 +175,9 @@ void solve(FILE* fp, vector_t* seeds, solution_t *solution) {
                 vector_t data = match_range_on_map(result.get(&result, j)._uint64, result.get(&result, j + 1)._uint64, maps[k]);
                 ranges.append(&ranges, data);
 
-                _vector_free(&data);
+                _vector_free_items(&data);
             }
+            _vector_free_items(&result);
             result = ranges;
             k++;
         }
@@ -188,17 +189,19 @@ void solve(FILE* fp, vector_t* seeds, solution_t *solution) {
             if (result.get(&result, j)._uint64 < minimum)
                 minimum = result.get(&result, j)._uint64;
 
-        _vector_free(&result);
+        _vector_free_items(&result);
     }
 
     solution->part_two = minimum;
 
     // Cleanup time:
     free(buffer);
-    _vector_free(&seed_to_soil_map);
-    _vector_free(&soil_to_fertilizer_map);
-    _vector_free(&fertilizer_to_water_map);
-    _vector_free(&water_to_light_map);
-    _vector_free(&light_to_temp_map);
-    _vector_free(&temp_to_humidity_map);
+    for (size_t k = 0; k < NUM_MAPS; k++) {
+        for (size_t i = 0; i < maps[k]->length; i++) {
+            vector_t *nums = _vector_get(maps[k], i)._ptr;
+            _vector_free(nums);
+        }
+
+        _vector_free_items(maps[k]);
+    }
 }

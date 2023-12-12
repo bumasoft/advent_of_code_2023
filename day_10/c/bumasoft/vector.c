@@ -6,7 +6,7 @@
 #include <string.h>
 
 vector_item_t _vector_get(vector_t* vec, size_t i) {
-    if (vec == NULL || vec->length <= i || vec->items == NULL) 
+    if (vec == NULL || vec->length <= i || vec->items == NULL)
         return (vector_item_t){.is_empty = true};
 
     return vec->items[i];
@@ -40,8 +40,9 @@ void _vector_append(vector_t* dest_vec, vector_t src_vec) {
     size_t size = sizeof(vector_item_t);
 
     if (dest_vec->length == 0) {
-        // Simple scenario, we just make a copy of extra:
-        SAFE_CALLOC(, dest_vec->items, src_vec.capacity, size);
+        dest_vec->capacity = src_vec.capacity;
+
+        SAFE_REALLOC(, dest_vec->items, dest_vec->items, dest_vec->capacity, size);
 
         memcpy(dest_vec->items, src_vec.items, src_vec.length * size);
         dest_vec->length = src_vec.length;
@@ -66,10 +67,6 @@ vector_item_t _vector_push(vector_t* vec, vector_item_t item) {
     if (item.is_empty) return item;
 
     size_t size = sizeof(vector_item_t);
-
-    if (vec->length == 0) {
-        SAFE_CALLOC(, vec->items, vec->capacity, size);
-    }
 
     if (vec->length == vec->capacity) {
         vec->capacity *= vec->growth_factor;
@@ -107,8 +104,6 @@ vector_item_t _vector_pop(vector_t* vec) {
     vector_item_t item = _vector_get(vec, vec->length - 1 );
     vec->length--;
 
-    if (vec->length == 0) _vector_free(vec);
-
     return item;
 }
 
@@ -118,10 +113,11 @@ vector_t _vector_init(vector_t vinit) {
 
     if (vinit.items == NULL) vinit.length = 0;
 
-    if (vinit.length > 0) {
-        SAFE_CALLOC(, items, vinit.length, item_size);
+    if (vinit.capacity > 0) {
+        SAFE_CALLOC(, items, vinit.capacity, item_size);
 
-        memcpy(items, vinit.items, item_size * vinit.length);
+        if (vinit.length > 0)
+            memcpy(items, vinit.items, item_size * vinit.length);
     }
     else items = NULL;
 
@@ -140,6 +136,7 @@ vector_t _vector_init(vector_t vinit) {
             .pop = (vector_item_t (*)(vector_t* vec)) _vector_pop,
             .to_u64 = (vector_t (*)(vector_t* vec)) _vector_to_u64,
             .free = (void (*)(vector_t* vec)) _vector_free,
+            .free_items = (void (*)(vector_t* vec)) _vector_free_items,
     };
 
     return vec;
@@ -156,8 +153,11 @@ vector_t* _vector_init_ptr(vector_t vinit) {
 vector_t _vector_to_u64(vector_t *vec) {
     if (vec == NULL || vec->length == 0) return *vec;
 
-    for (size_t i = 0; i < vec->length; i++)
-        vec->set(vec, i, VEC_U64(atoll( (char*) vec->get(vec, i)._ptr )));
+    for (size_t i = 0; i < vec->length; i++) {
+        char *str_ptr = vec->get(vec, i)._ptr;
+        vec->set(vec, i, VEC_U64(atoll((char *) str_ptr)));
+        free(str_ptr);
+    }
 
     return *vec;
 }
@@ -165,7 +165,7 @@ vector_t _vector_to_u64(vector_t *vec) {
 /*
  * Frees all memory allocated for items and clears vector.
  */
-void _vector_free(vector_t *vec) {
+void _vector_free_items(vector_t *vec) {
     if (vec == NULL) return;
 
     free(vec->items);
@@ -173,4 +173,14 @@ void _vector_free(vector_t *vec) {
     vec->length = 0;
     vec->capacity = VECTOR_DEFAULT_CAPACITY;
     vec->growth_factor = VECTOR_DEFAULT_GROWTH_FACTOR;
+}
+
+/*
+ * Frees all memory allocated for items, clears vector and frees entire malloced vector.
+ */
+void _vector_free(vector_t *vec) {
+    if (vec == NULL) return;
+
+    _vector_free_items(vec);
+    free(vec);
 }
