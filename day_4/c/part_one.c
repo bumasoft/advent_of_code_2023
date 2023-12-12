@@ -20,6 +20,8 @@ void solve_part_one(char *line, solution_t *solution) {
 
     // The part between : and | is the list of winning #s
     SAFE_CALLOC(char*, winning_nums, pipe - line + 1, sizeof(char));
+    char* winning_nums_head = winning_nums;
+
     strncpy(winning_nums, line, pipe - line);
     winning_nums[pipe - line] = '\0';
     winning_nums = str_trim(winning_nums);
@@ -28,6 +30,8 @@ void solve_part_one(char *line, solution_t *solution) {
     char* end_of_line;
     for (end_of_line = line; *end_of_line && !IS_CRLF(*end_of_line); end_of_line++);
     SAFE_CALLOC(char*, own_nums, end_of_line - pipe + 1, sizeof(char));
+    char* own_nums_head = own_nums;
+
     strncpy(own_nums, pipe + 1, end_of_line - pipe);
     own_nums[end_of_line - pipe] = '\0';
     own_nums = str_trim(own_nums);
@@ -58,6 +62,6 @@ void solve_part_one(char *line, solution_t *solution) {
     solution->part_one_sum += sum;
     solution->part_two_matches[solution->part_two_match_count++] = matches;
 
-    free(winning_nums);
-    free(own_nums);
+    free(winning_nums_head);
+    free(own_nums_head);
 }
