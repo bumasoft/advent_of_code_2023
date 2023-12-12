@@ -17,13 +17,13 @@ int main(int argc, char **argv) {
     vector_t hands = vector_init();
 
     while (fgets(line, BUFFER_LENGTH, fp)) {
-        vector_t by_space = str_split_by_whitespace(line);
-        if (by_space.length != TUPLE) PANIC("Invalid input.");
+        vector_t* by_space = str_split_by_whitespace(line);
+        if (by_space->length != TUPLE) PANIC("Invalid input.");
 
-        vector_t* cards = str_to_vec(by_space.get(&by_space, 0)._ptr);
+        vector_t* cards = str_to_vec(by_space->get(by_space, 0)._ptr);
         if (cards->length != CARDS_PER_HAND) PANIC("Invalid input.");
 
-        uint64_t bid = atoll(by_space.get(&by_space, 1)._ptr);
+        uint64_t bid = atoll(by_space->get(by_space, 1)._ptr);
         hand_type_t type = get_hand_type(cards, false); // computer for part 1 initially
 
         // create a 3-tuple (cards, bid, hand_type) and add to hands vector:
@@ -31,6 +31,10 @@ int main(int argc, char **argv) {
                                     .items = (vector_item_t[]) { VEC_ITEM_PTR(cards), VEC_U64(bid), VEC_U8(type) });
 
         hands.push(&hands, VEC_ITEM_PTR(hand));
+
+        for (size_t i = 0; i < by_space->length; i++)
+            free(by_space->get(by_space, i)._ptr);
+        _vector_free(by_space);
     }
 
     // Sort hands for part 1
@@ -69,5 +73,11 @@ int main(int argc, char **argv) {
     // Cleanup:
     fclose(fp);
     free(line);
-    _vector_free(&hands);
+    for (size_t i = 0; i < hands.length; i++) {
+        vector_t* hand = (vector_t*)hands.get(&hands, i)._ptr;
+
+        _vector_free(hand->get(hand, 0)._ptr);
+        _vector_free(hand);
+    }
+    _vector_free_items(&hands);
 }
