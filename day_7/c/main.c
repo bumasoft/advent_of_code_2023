@@ -76,7 +76,7 @@ int main(int argc, char **argv) {
     for (size_t i = 0; i < hands.length; i++) {
         vector_t* hand = (vector_t*)hands.get(&hands, i)._ptr;
 
-        _vector_free(hand->get(hand, 0)._ptr);
+        _vector_free(hand->get(hand, 0)._ptr); // free cards
         _vector_free(hand);
     }
     _vector_free_items(&hands);
