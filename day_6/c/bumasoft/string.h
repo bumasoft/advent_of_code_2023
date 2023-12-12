@@ -34,7 +34,7 @@ char* str_trim(char* str);
 vector_t str_split(char* str, char* delimiter);
 
 /* Splits a string by whitespace (any number of spaces) and returns a vector of component strings. */
-vector_t str_split_by_whitespace(char* str);
+vector_t* str_split_by_whitespace(char* str);
 
 /* Returns a copy of a string. */
 char* str_clone(char* str);

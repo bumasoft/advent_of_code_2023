@@ -35,22 +35,22 @@ static uint64_t compute_num_ways(uint64_t t, uint64_t d) {
 }
 
 void solve_part_one(char* time_str, char* dist_str, char* time_tag, char* dist_tag, solution_t *solution) {
-    vector_t times = str_split_by_whitespace(time_str + strlen(time_tag));
-    vector_t distances = str_split_by_whitespace(dist_str + strlen(dist_tag));
+    vector_t* times = str_split_by_whitespace(time_str + strlen(time_tag));
+    vector_t* distances = str_split_by_whitespace(dist_str + strlen(dist_tag));
 
-    times.to_u64(&times);
-    distances.to_u64(&distances);
+    times->to_u64(times);
+    distances->to_u64(distances);
 
-    if (times.length == 0 || (times.length != distances.length)) {
+    if (times->length == 0 || (times->length != distances->length)) {
         fprintf(stderr, "Invalid input file.");
         exit(EXIT_FAILURE);
     }
 
     uint64_t result = 0;
 
-    for (size_t i = 0; i < times.length; i++) {
-        uint64_t t = times.get(&times, i)._uint64;
-        uint64_t d = distances.get(&distances, i)._uint64;
+    for (size_t i = 0; i < times->length; i++) {
+        uint64_t t = times->get(times, i)._uint64;
+        uint64_t d = distances->get(distances, i)._uint64;
 
         uint64_t ways = compute_num_ways(t, d);
 
@@ -60,8 +60,8 @@ void solve_part_one(char* time_str, char* dist_str, char* time_tag, char* dist_t
     solution->part_one = result;
 
     // Cleanup
-    _vector_free(&times);
-    _vector_free(&distances);
+    _vector_free(times);
+    _vector_free(distances);
 }
 
 void solve_part_two(char* time_str, char* dist_str, solution_t *solution) {

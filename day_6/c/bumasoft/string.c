@@ -51,8 +51,8 @@ vector_t str_split(char* str, char* delimiter) {
     return vec;
 }
 
-vector_t str_split_by_whitespace(char* str) {
-    vector_t vec = vector_init(.length = 0, .capacity = 25);
+vector_t* str_split_by_whitespace(char* str) {
+    vector_t* vec = vector_init_ptr(.length = 0, .capacity = 25);
 
     str = str_ltrim(str);
     char* pivot;
@@ -60,14 +60,14 @@ vector_t str_split_by_whitespace(char* str) {
         char chunk[pivot - str + 1];
         memcpy(chunk, str, (pivot - str) * sizeof(char));
         chunk[pivot - str] = '\0';
-        vec.push_string(&vec, chunk);
+        vec->push_string(vec, chunk);
 
         str = pivot + 1;
 
         while (*str == ' ') str++;
     }
 
-    vec.push_string(&vec, str);
+    vec->push_string(vec, str);
 
     return vec;
 }
