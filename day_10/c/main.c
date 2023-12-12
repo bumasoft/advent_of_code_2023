@@ -13,12 +13,11 @@ int main(int argc, char **argv) {
     solution_t solution = {0, 0};
 
     SAFE_CALLOC(char*, line, BUFFER_LENGTH, sizeof(char));
-    SAFE_CALLOC(char**, maze, MAX_ROWS, sizeof(char*));
+    SAFE_CALLOC(tile_t**, maze, MAX_ROWS, sizeof(tile_t*));
 
     size_t row_count = 0;
     size_t col_count = 0;
     position_t start = {0, 0};
-    char* start_x;
 
     size_t prev_cols = 0;
 
@@ -31,12 +30,16 @@ int main(int argc, char **argv) {
 
         prev_cols = len;
 
-        SAFE_CALLOC(, maze[row_count], len + 1, sizeof(char));
+        SAFE_CALLOC(, maze[row_count], len + 1, sizeof(tile_t));
 
+        char* start_x;
         if ((start_x = strchr(trimmed, STARTING_POSITION)) != NULL)
             start = (position_t){ (start_x - trimmed), row_count };
 
-        strcpy(maze[row_count++], trimmed);
+        for (size_t i = 0; i < len; i++)
+            maze[row_count][i] = (tile_t) { trimmed[i], 0 };
+
+        row_count++;
     }
 
     col_count = prev_cols;
