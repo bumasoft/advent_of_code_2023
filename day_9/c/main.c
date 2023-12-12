@@ -33,4 +33,11 @@ int main(int argc, char **argv) {
     // Cleanup:
     fclose(fp);
     free(line);
+
+    for (size_t i = 0; i < histories.length; i++) {
+        vector_t* history = histories.get(&histories, i)._ptr;
+
+        history->free(history);
+    }
+    _vector_free_items(&histories);
 }

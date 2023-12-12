@@ -66,6 +66,10 @@ uint64_t part_one_recurse(char **maze, size_t row_count, size_t col_count, posit
 }
 
 void solve_part_one(char **maze, size_t row_count, size_t col_count, position_t start, solution_t *solution) {
+    // todo allocate an uint64 matrix to save path counts
+    uint64_t** counter = malloc(row_count*sizeof(uint64_t*) + row_count * col_count * sizeof(uint64_t));
+
+    counter[0][0] = 100;
     solution->part_one = part_one_recurse(maze, row_count, col_count, start, 0);
 }
 

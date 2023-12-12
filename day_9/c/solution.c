@@ -3,6 +3,7 @@
 //
 
 #include "solution.h"
+#include <stdlib.h>
 
 uint64_t extrapolate(vector_t* history, part_t part) {
     vector_t* diffs = vector_init_ptr();
@@ -18,10 +19,16 @@ uint64_t extrapolate(vector_t* history, part_t part) {
 
     uint64_t item = history->get(history, part == PART_ONE ? history->length - 1 : 0)._uint64;
 
-    if (all_zeroes) return item;
+    if (all_zeroes) {
+        _vector_free_items((diffs));
+        free(diffs);
+        return item;
+    }
 
     uint64_t extrapolate_next = extrapolate(diffs, part);
 
+    _vector_free_items(diffs);
+    free(diffs);
     return part == PART_ONE ? extrapolate_next + item : item - extrapolate_next;
 }
 

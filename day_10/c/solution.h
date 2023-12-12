@@ -6,6 +6,7 @@
 #define README_MD_SOLUTION_H
 #include "aoc.h"
 #include "bumasoft/vector.h"
+#include "bumasoft/alloc.h"
 
 #define MAX_ROWS 500
 
