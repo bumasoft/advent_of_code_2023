@@ -45,9 +45,8 @@ void part_one_recurse(tile_t **maze, size_t row_count, size_t col_count, positio
 
             //printf("At (%zu, %zu) and going up.\n\n", start.x, start.y);
             part_one_recurse(maze, row_count, col_count, next_pos);
+            maze[next_pos.y][next_pos.x].status.bottom_checked = 0;
         }
-
-        maze[next_pos.y][next_pos.x].status.bottom_checked = 0;
     }
 
     // print_maze(maze, row_count, col_count);
@@ -68,14 +67,13 @@ void part_one_recurse(tile_t **maze, size_t row_count, size_t col_count, positio
             if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
                 maze[next_pos.y][next_pos.x].dist = 0;
             } else {
-                maze[next_pos.y][next_pos.x].dist = maze[start.y][start.x].dist + 1;
+                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
             }
             //printf("At (%zu, %zu) and going left.\n\n", start.x, start.y);
 
             part_one_recurse(maze, row_count, col_count, next_pos);
+            maze[next_pos.y][next_pos.x].status.right_checked = 0;
         }
-
-        maze[next_pos.y][next_pos.x].status.right_checked = 0;
     }
 
     // print_maze(maze, row_count, col_count);
@@ -94,13 +92,12 @@ void part_one_recurse(tile_t **maze, size_t row_count, size_t col_count, positio
             if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
                 maze[next_pos.y][next_pos.x].dist = 0;
             } else {
-                maze[next_pos.y][next_pos.x].dist = maze[start.y][start.x].dist + 1;
+                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
             }
             //printf("At (%zu, %zu) and going right.\n\n", start.x, start.y);
             part_one_recurse(maze, row_count, col_count, next_pos);
+            maze[next_pos.y][next_pos.x].status.left_checked = 0;
         }
-
-        maze[next_pos.y][next_pos.x].status.left_checked = 0;
     }
 
     // print_maze(maze, row_count, col_count);
@@ -122,13 +119,12 @@ void part_one_recurse(tile_t **maze, size_t row_count, size_t col_count, positio
             if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
                 maze[next_pos.y][next_pos.x].dist = 0;
             } else {
-                maze[next_pos.y][next_pos.x].dist = maze[start.y][start.x].dist + 1;
+                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
             }
             //printf("At (%zu, %zu) and going down.\n\n", start.x, start.y);
             part_one_recurse(maze, row_count, col_count, next_pos);
+            maze[next_pos.y][next_pos.x].status.top_checked = 0;
         }
-
-        maze[next_pos.y][next_pos.x].status.top_checked = 0;
     }
 
 }
