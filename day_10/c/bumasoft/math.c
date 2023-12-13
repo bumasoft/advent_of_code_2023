@@ -45,3 +45,18 @@ uint64_t max(size_t count, ...) {
 
     return result;
 }
+
+uint64_t min(size_t count, ...) {
+    uint64_t result = UINT64_MAX;
+
+    va_list args;
+    va_start(args, count);
+
+    for (size_t i = 0; i < count; i++) {
+        uint64_t num = va_arg(args, uint64_t);
+
+        if (num < result) result = num;
+    }
+
+    return result;
+}

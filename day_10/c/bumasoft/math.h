@@ -18,5 +18,6 @@ uint64_t lcm(uint64_t a, uint64_t b);
 uint64_t lcm_for_array(uint64_t arr[], uint64_t n);
 
 uint64_t max(size_t count, ...);
+uint64_t min(size_t count, ...);
 
 #endif //README_MD_MATH_H

@@ -25,8 +25,7 @@ int main(int argc, char **argv) {
         char* trimmed = str_trim(line);
         size_t len = strlen(trimmed);
 
-        if (prev_cols > 0 && len != prev_cols)
-            PANIC("Invalid data.");
+        if (prev_cols > 0 && len != prev_cols) PANIC("Invalid data.");
 
         prev_cols = len;
 
@@ -37,7 +36,7 @@ int main(int argc, char **argv) {
             start = (position_t){ (start_x - trimmed), row_count };
 
         for (size_t i = 0; i < len; i++)
-            maze[row_count][i] = (tile_t) { trimmed[i], 0 };
+            maze[row_count][i] = (tile_t) { trimmed[i], 0, .status={0, 0, 0, 0} };
 
         row_count++;
     }

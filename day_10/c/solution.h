@@ -5,10 +5,11 @@
 #ifndef README_MD_SOLUTION_H
 #define README_MD_SOLUTION_H
 #include "aoc.h"
-#include "bumasoft/vector.h"
+#include <stdbool.h>
 #include "bumasoft/alloc.h"
 
 #define MAX_ROWS 500
+#define IS_START_OR_DIRT(sym) ((sym) == 'S' || (sym == '.'))
 
 typedef enum {
     VERTICAL_PIPE = '|',
@@ -41,7 +42,8 @@ typedef struct {
     } status
 } tile_t;
 
-uint64_t part_one_recurse(tile_t** maze, size_t row_count, size_t col_count, position_t start, uint64_t accumulator);
+void print_maze(tile_t** maze, size_t row_count, size_t col_count);
+void part_one_recurse(tile_t** maze, size_t row_count, size_t col_count, position_t start);
 void solve_part_one(tile_t** maze, size_t row_count, size_t col_count, position_t start, solution_t* solution);
 void solve_part_two(tile_t** maze, size_t row_count, size_t col_count, position_t start, solution_t* solution);
 #endif //README_MD_SOLUTION_H
