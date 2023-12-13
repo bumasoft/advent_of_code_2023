@@ -39,7 +39,7 @@ typedef struct {
         unsigned int bottom_checked : 1;
         unsigned int left_checked : 1;
         unsigned int right_checked : 1;
-    } status
+    } status;
 } tile_t;
 
 void print_maze(tile_t** maze, size_t row_count, size_t col_count);
