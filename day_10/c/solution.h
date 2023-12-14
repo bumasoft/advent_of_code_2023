@@ -15,6 +15,7 @@
 #define CAN_GO_WEST(pipe) ((pipe) == STARTING_POSITION || (pipe) == HORIZONTAL_PIPE || (pipe) == N_W_BEND || (pipe) == S_W_BEND)
 #define CAN_GO_EAST(pipe) ((pipe) == STARTING_POSITION || (pipe) == HORIZONTAL_PIPE || (pipe) == N_E_BEND || (pipe) == S_E_BEND)
 #define CAN_GO_SOUTH(pipe) ((pipe) == STARTING_POSITION || (pipe) == VERTICAL_PIPE || (pipe) == S_W_BEND || (pipe) == S_E_BEND)
+#define P2_REACHED_END (-1000)
 
 typedef enum {
     NORTH = 0,
