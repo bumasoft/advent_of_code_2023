@@ -24,7 +24,7 @@ void part_one_recurse(tile_t **maze, size_t row_count, size_t col_count, positio
 
         if (CAN_GO(this_pipe, DIRECTIONS[i])) {
             uint32_t next_dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1
-                                                                        : (maze[next_pos.y][next_pos.x].dist < maze[start.y][start.x].dist + 1 ? maze[next_pos.y][next_pos.x].dist : maze[start.y][start.x].dist + 1) ;
+                                                                        : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist + 1) ;
             maze[next_pos.y][next_pos.x].dist = IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol) ? 0 : next_dist;
 
             part_one_recurse(maze, row_count, col_count, next_pos);
