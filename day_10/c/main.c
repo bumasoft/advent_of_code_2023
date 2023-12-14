@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
             start = (position_t){ (start_x - trimmed), row_count };
 
         for (size_t i = 0; i < len; i++)
-            maze[row_count][i] = (tile_t) { trimmed[i], 0, .status={0, 0, 0, 0} };
+            maze[row_count][i] = (tile_t) { trimmed[i], 0, .status=0};
 
         row_count++;
     }

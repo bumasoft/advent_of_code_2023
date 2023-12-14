@@ -7,123 +7,30 @@
 #include <stdio.h>
 #include <string.h>
 
-void print_maze(tile_t** maze, size_t row_count, size_t col_count) {
-    for (size_t i = 0; i < row_count; i++) {
-        for (size_t j = 0; j < col_count; j++) {
-            printf("%u\t", maze[i][j].dist);
-        }
-        puts("\n");
-    }
-    puts("---------------\n");
-}
-
 void part_one_recurse(tile_t **maze, size_t row_count, size_t col_count, position_t start) {
+    if (start.x > col_count - 1 || start.x < 0 || start.y < 0 || start.y > row_count - 1) return;
+
     char this_pipe = maze[start.y][start.x].symbol;
 
-    if (start.y > 0 && maze[start.y][start.x].status.top_checked == 0) {
-        maze[start.y][start.x].status.top_checked = 1;
+    for (uint8_t i = 0; i < NUM_DIRECTIONS; i++) {
+        uint8_t status_mask = (1 << i);
+        if (maze[start.y][start.x].status & status_mask) continue;
 
-        position_t next_pos = (position_t) {start.x, start.y - 1};
+        maze[start.y][start.x].status |= status_mask; // turn on the flag for current direction
+        position_t next_pos = (position_t) {start.x + NEXT_X(DIRECTIONS[i]), start.y + NEXT_Y(DIRECTIONS[i])};
 
-        maze[next_pos.y][next_pos.x].status.bottom_checked = 1;
+        if (next_pos.x > col_count - 1 || next_pos.x < 0 || next_pos.y > row_count - 1 || next_pos.y < 0) continue;
 
-        if (this_pipe == STARTING_POSITION ||
-            this_pipe == VERTICAL_PIPE ||
-            this_pipe == N_W_BEND ||
-            this_pipe == N_E_BEND) {
+        uint8_t mirror_mask = (1 << MIRROR_DIR(DIRECTIONS[i]));
+        maze[next_pos.y][next_pos.x].status |= mirror_mask; // set bottom status flag
 
-            if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
-                maze[next_pos.y][next_pos.x].dist = 0;
-            } else {
-                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
-            } /* else if (maze[next_pos.y][next_pos.x].dist == 0) {
-                maze[next_pos.y][next_pos.x].dist = 1;
-            } else {
-                maze[next_pos.y][next_pos.x].dist = min(2, maze[start.y][start.x].dist + 1,
-                                                         maze[next_pos.y][next_pos.x].dist);
-            }*/
-
-            //printf("At (%zu, %zu) and going up.\n\n", start.x, start.y);
-            part_one_recurse(maze, row_count, col_count, next_pos);
-            maze[next_pos.y][next_pos.x].status.bottom_checked = 0;
-        }
-    }
-
-    // print_maze(maze, row_count, col_count);
-
-
-    if (start.x > 0 && maze[start.y][start.x].status.left_checked == 0) {
-        maze[start.y][start.x].status.left_checked = 1;
-
-        position_t next_pos = (position_t) {start.x - 1, start.y};
-
-        maze[next_pos.y][next_pos.x].status.right_checked = 1;
-
-        if (this_pipe == STARTING_POSITION ||
-            this_pipe == HORIZONTAL_PIPE ||
-            this_pipe == N_W_BEND ||
-            this_pipe == S_W_BEND) {
-
-            if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
-                maze[next_pos.y][next_pos.x].dist = 0;
-            } else {
-                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
-            }
-            //printf("At (%zu, %zu) and going left.\n\n", start.x, start.y);
+        if (CAN_GO(this_pipe, DIRECTIONS[i])) {
+            uint32_t next_dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1
+                                                                        : (maze[next_pos.y][next_pos.x].dist < maze[start.y][start.x].dist + 1 ? maze[next_pos.y][next_pos.x].dist : maze[start.y][start.x].dist + 1) ;
+            maze[next_pos.y][next_pos.x].dist = IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol) ? 0 : next_dist;
 
             part_one_recurse(maze, row_count, col_count, next_pos);
-            maze[next_pos.y][next_pos.x].status.right_checked = 0;
-        }
-    }
-
-    // print_maze(maze, row_count, col_count);
-
-    if (start.x < col_count - 1 && maze[start.y][start.x].status.right_checked == 0) {
-        maze[start.y][start.x].status.right_checked = 1;
-
-        position_t next_pos = (position_t) {start.x + 1, start.y};
-        maze[next_pos.y][next_pos.x].status.left_checked = 1;
-
-        if (this_pipe == STARTING_POSITION ||
-            this_pipe == HORIZONTAL_PIPE ||
-            this_pipe == N_E_BEND ||
-            this_pipe == S_E_BEND) {
-
-            if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
-                maze[next_pos.y][next_pos.x].dist = 0;
-            } else {
-                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
-            }
-            //printf("At (%zu, %zu) and going right.\n\n", start.x, start.y);
-            part_one_recurse(maze, row_count, col_count, next_pos);
-            maze[next_pos.y][next_pos.x].status.left_checked = 0;
-        }
-    }
-
-    // print_maze(maze, row_count, col_count);
-
-    if (start.y < row_count - 1 && maze[start.y][start.x].status.bottom_checked == 0) {
-        maze[start.y][start.x].status.bottom_checked = 1;
-
-        position_t next_pos = (position_t) {start.x, start.y + 1};
-        maze[next_pos.y][next_pos.x].status.top_checked = 1;
-
-        if (this_pipe == STARTING_POSITION ||
-            this_pipe == VERTICAL_PIPE ||
-            this_pipe == S_W_BEND ||
-            this_pipe == S_E_BEND) {
-            /*maze[next_pos.y][next_pos.x].dist =
-                    maze[next_pos.y][next_pos.x].dist == 0 && !IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol) ?
-                    maze[start.y][start.x].dist + 1 : min(2, maze[start.y][start.x].dist + 1,
-                                                          maze[next_pos.y][next_pos.x].dist);*/
-            if (IS_START_OR_DIRT(maze[next_pos.y][next_pos.x].symbol)) {
-                maze[next_pos.y][next_pos.x].dist = 0;
-            } else {
-                maze[next_pos.y][next_pos.x].dist = maze[next_pos.y][next_pos.x].dist == 0 ? maze[start.y][start.x].dist + 1 : min(2, maze[next_pos.y][next_pos.x].dist, maze[start.y][start.x].dist)+1;
-            }
-            //printf("At (%zu, %zu) and going down.\n\n", start.x, start.y);
-            part_one_recurse(maze, row_count, col_count, next_pos);
-            maze[next_pos.y][next_pos.x].status.top_checked = 0;
+            maze[next_pos.y][next_pos.x].status ^= mirror_mask;
         }
     }
 
@@ -133,7 +40,6 @@ void solve_part_one(tile_t **maze, size_t row_count, size_t col_count, position_
     part_one_recurse(maze, row_count, col_count, start);
 
     uint32_t max_dist = 0;
-    print_maze(maze, row_count, col_count);
 
     for (size_t i = 0; i < row_count; i++) {
         for (size_t j = 0; j < col_count; j++) {
